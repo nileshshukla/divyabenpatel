@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Divya Patel Portfolio — Concept Previews</title>
+<style>
+  :root {
+    --bg:#0f1216; --surface:#181c22; --line:#2a2f38; --text:#eef1f5; --soft:#9aa3b2;
+    --a1:#0d7a5f; --a2:#4338ca; --font:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:var(--font); background:radial-gradient(1200px 600px at 70% -10%, #1b2430, var(--bg)); color:var(--text); min-height:100vh; }
+  .wrap { max-width:1000px; margin:0 auto; padding:60px 24px; }
+  .eyebrow { color:var(--soft); letter-spacing:2px; text-transform:uppercase; font-size:12px; font-weight:700; }
+  h1 { font-size:clamp(30px,5vw,48px); margin:12px 0 10px; }
+  .sub { color:var(--soft); max-width:640px; font-size:17px; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-top:44px; }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px; text-decoration:none; color:inherit; transition:transform .2s, border-color .2s; display:flex; flex-direction:column; }
+  .card:hover { transform:translateY(-4px); }
+  .card.c1:hover { border-color:var(--a1); }
+  .card.c2:hover { border-color:var(--a2); }
+  .tag { align-self:flex-start; font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px; margin-bottom:16px; }
+  .c1 .tag { background:rgba(13,122,95,.18); color:#35c99a; }
+  .c2 .tag { background:rgba(67,56,202,.2); color:#8b83ff; }
+  .card.c3:hover { border-color:#c98a1a; }
+  .c3 .tag { background:rgba(201,138,26,.18); color:#e6b34d; }
+  .c3 .go { color:#e6b34d; }
+  .card.featured { outline:2px solid #e6b34d; outline-offset:-1px; grid-column:1 / -1; }
+  .card h2 { font-size:24px; margin-bottom:8px; }
+  .card p { color:var(--soft); font-size:15px; flex:1; }
+  .card .go { margin-top:18px; font-weight:700; font-size:14px; }
+  .c1 .go { color:#35c99a; } .c2 .go { color:#8b83ff; }
+  .note { margin-top:40px; padding:20px 24px; background:var(--surface); border:1px solid var(--line); border-radius:16px; color:var(--soft); font-size:14px; line-height:1.7; }
+  .note b { color:var(--text); }
+  @media (max-width:720px){ .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Portfolio prototypes · placeholder content</div>
+    <h1>Divya Patel — pick a direction</h1>
+    <p class="sub">Two interactive concepts for the timeline portfolio. Both are plain HTML/CSS/JS (no build step), ready for GitHub Pages, with all content in one editable data block. Open each, try the theme toggle, and tell me which direction to refine.</p>
+
+    <div class="grid">
+      <a class="card c1" href="concept-1-dmaic.html">
+        <span class="tag">Concept 1</span>
+        <h2>The DMAIC Quality Journey</h2>
+        <p>Timeline where every milestone is a quality story — Problem → baseline metric → action → result, with before/after numbers and an improvement delta. Most on-brand for a Six Sigma / CQA professional.</p>
+        <span class="go">View concept 1 →</span>
+      </a>
+      <a class="card c2" href="concept-2-blog.html">
+        <span class="tag">Concept 2</span>
+        <h2>Blog-Style Timeline + Metrics</h2>
+        <p>Animated metrics dashboard up top, an alternating timeline of "posts" you can filter by focus and expand to read, plus a certifications wall. Warmer, more editorial feel.</p>
+        <span class="go">View concept 2 →</span>
+      </a>
+      <a class="card c3 featured" href="index.html">
+        <span class="tag">Concept 3 · Live site</span>
+        <h2>Achievement Moments Timeline</h2>
+        <p>A LinkedIn-style feed of career moments — each with a date, a narrative story, and a photo gallery with lightbox. Narrative-first, not number-centric. This is the live site (index.html). Filter by Awards, Certifications, Projects, Milestones.</p>
+        <span class="go">View the live site →</span>
+      </a>
+    </div>
+
+    <div class="note">
+      <b>How to preview:</b> open this <code>previews.html</code> in your browser (double-click the file), or run a tiny local server from this folder:
+      <br>&nbsp;&nbsp;<code>python3 -m http.server</code> &nbsp;then visit&nbsp; <code>http://localhost:8000</code>
+      <br><br>
+      <b>Next steps once you choose:</b> gather Divya's real roles/dates/achievements → I plug them into the data block → add her photo &amp; résumé PDF → deploy to GitHub Pages → point your custom domain. All content lives in one array per file, so updates are a quick edit.
+    </div>
+  </div>
+</body>
+</html>

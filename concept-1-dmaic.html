@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Divya Patel — Quality Journey (Concept 1: DMAIC)</title>
+<style>
+  /* ============================================================
+     CONCEPT 1 — "The Continuous Improvement" timeline
+     Theme: Six Sigma DMAIC. Each milestone is a quality story:
+     Problem -> Before metric -> Action -> After metric -> Impact.
+     ============================================================ */
+
+  :root {
+    --bg: #f6f8f7;
+    --surface: #ffffff;
+    --surface-2: #eef2f1;
+    --text: #14201c;
+    --text-soft: #55635e;
+    --line: #dce3e1;
+    --accent: #0d7a5f;      /* quality green */
+    --accent-soft: #d8efe7;
+    --gold: #c98a1a;        /* improvement highlight */
+    --gold-soft: #f7ecd3;
+    --shadow: 0 10px 30px rgba(20,32,28,.08);
+    --radius: 16px;
+    --maxw: 1000px;
+    --font: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0e1512;
+    --surface: #16211d;
+    --surface-2: #1d2b26;
+    --text: #eaf1ee;
+    --text-soft: #9db0a9;
+    --line: #26332e;
+    --accent: #35c99a;
+    --accent-soft: #123329;
+    --gold: #e6b34d;
+    --gold-soft: #2e2510;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s, color .3s;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---- Top nav ---- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-weight: 700; letter-spacing: .5px; display: flex; align-items: center; gap: 10px; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .nav-links { display: flex; gap: 22px; align-items: center; }
+  .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: var(--accent); }
+  .toggle { cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    border-radius: 999px; padding: 6px 12px; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+
+  /* ---- Hero ---- */
+  header.hero { position: relative; overflow: hidden; padding: 90px 0 70px; }
+  /* subtle control-chart motif */
+  .hero-motif { position: absolute; inset: 0; opacity: .5; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 20%, transparent 75%);
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 12px; }
+  h1 { font-family: var(--serif); font-size: clamp(38px, 6vw, 68px); line-height: 1.05; margin: 14px 0 6px; font-weight: 600; }
+  .creds { color: var(--text-soft); font-size: 15px; font-weight: 600; letter-spacing: .5px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+  .badge { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+  .lede { font-size: clamp(17px, 2.4vw, 21px); color: var(--text-soft); max-width: 620px; margin-top: 16px; }
+  .cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .btn { text-decoration: none; font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: 999px; display: inline-flex; gap: 8px; align-items: center; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+
+  /* ---- Stats ---- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0 10px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .stat .num { font-family: var(--serif); font-size: 34px; font-weight: 600; color: var(--accent); }
+  .stat .lbl { font-size: 13px; color: var(--text-soft); margin-top: 4px; }
+
+  /* ---- DMAIC legend ---- */
+  section.section { padding: 60px 0; }
+  .section-head { text-align: center; margin-bottom: 40px; }
+  .section-head h2 { font-family: var(--serif); font-size: clamp(28px, 4vw, 40px); font-weight: 600; }
+  .section-head p { color: var(--text-soft); margin-top: 8px; }
+  .dmaic { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+  .phase { text-align: center; padding: 14px 8px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+  .phase .k { font-family: var(--serif); font-size: 26px; font-weight: 700; color: var(--accent); }
+  .phase .n { font-size: 12px; color: var(--text-soft); letter-spacing: .5px; }
+
+  /* ---- Timeline ---- */
+  .timeline { position: relative; margin-top: 30px; padding-left: 4px; }
+  .timeline::before { content: ""; position: absolute; left: 22px; top: 8px; bottom: 8px; width: 2px;
+    background: linear-gradient(var(--accent), var(--line)); }
+  .node { position: relative; padding: 0 0 34px 64px; opacity: 0; transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease; }
+  .node.in { opacity: 1; transform: none; }
+  .node .marker { position: absolute; left: 12px; top: 4px; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--accent); box-shadow: 0 0 0 5px var(--bg); }
+  .node .year { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 1px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px;
+    box-shadow: var(--shadow); margin-top: 8px; }
+  .card .role { font-family: var(--serif); font-size: 22px; font-weight: 600; }
+  .card .org { color: var(--text-soft); font-size: 14px; margin-bottom: 12px; }
+  .card .tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--gold); background: var(--gold-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
+  .story { display: grid; gap: 12px; }
+  .story .row { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .story .row .lab { min-width: 78px; font-weight: 700; color: var(--text-soft); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding-top: 2px; }
+  .metrics { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; align-items: center; }
+  .metric { background: var(--surface-2); border-radius: 12px; padding: 10px 14px; text-align: center; min-width: 96px; }
+  .metric .mv { font-family: var(--serif); font-size: 22px; font-weight: 700; }
+  .metric .ml { font-size: 11px; color: var(--text-soft); }
+  .metric.before .mv { color: var(--text-soft); }
+  .metric.after .mv { color: var(--accent); }
+  .arrow { font-size: 22px; color: var(--gold); }
+  .delta { margin-left: auto; background: var(--accent); color:#fff; font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; }
+
+  /* ---- Footer ---- */
+  footer { border-top: 1px solid var(--line); padding: 50px 0; text-align: center; color: var(--text-soft); }
+  footer a { color: var(--accent); text-decoration: none; display: inline-block; padding: 4px 2px; }
+  .preview-flag { position: fixed; bottom: 16px; left: 16px; z-index: 60; background: var(--gold); color:#1a1400;
+    font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 999px; box-shadow: var(--shadow); text-decoration: none; }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .dmaic { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .phase .k { font-size: 18px; }
+    .nav-links a:not(.toggle) { display: none; }
+  }
+  @media (max-width: 420px) {
+    .dmaic { gap: 6px; }
+    .phase { padding: 10px 2px; }
+    .phase .k { font-size: 16px; }
+    .phase .n { font-size: 9.5px; letter-spacing: 0; }
+  }
+</style>
+</head>
+<body>
+<!-- =========================================================
+     EDIT CONTENT HERE — everything below in the <script> data
+     blocks drives the page. Add a milestone = add one object.
+     ========================================================= -->
+<a class="preview-flag" href="previews.html">← Back to previews · Concept 1</a>
+
+<nav><div class="wrap">
+  <div class="brand"><span class="dot"></span> Divya Patel</div>
+  <div class="nav-links">
+    <a href="#stats">Impact</a>
+    <a href="#journey">Journey</a>
+    <a href="#contact">Contact</a>
+    <button class="toggle" id="themeBtn">🌙 Theme</button>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <div class="hero-motif"></div>
+  <div class="wrap">
+    <div class="eyebrow">Quality · Process Excellence · Continuous Improvement</div>
+    <h1 id="pName"></h1>
+    <div class="creds" id="pCreds"></div>
+    <div class="badges" id="pBadges"></div>
+    <p class="lede" id="pLede"></p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#journey">Explore the journey →</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="stats">
+  <div class="stats" id="statsGrid"></div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Every project, a measurable improvement</h2>
+      <p>Structured the Six Sigma way — Define, Measure, Analyze, Improve, Control.</p>
+    </div>
+    <div class="dmaic" id="dmaic"></div>
+  </div>
+</section>
+
+<section class="section" id="journey">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The Quality Journey</h2>
+      <p>Problem → baseline → action → result. Each milestone tells a story.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 style="font-family:var(--serif);font-weight:600;margin-bottom:10px;">Let's connect</h2>
+    <p>Open to quality engineering, auditing & process improvement opportunities.</p>
+    <p style="margin-top:14px;">
+      <a href="#">LinkedIn</a> · <a href="#">Email</a> · <a href="#">Résumé (PDF)</a>
+    </p>
+    <p style="margin-top:24px;font-size:13px;opacity:.7;">© <span id="yr"></span> Divya Patel · Built as a static site (Concept 1)</p>
+  </div>
+</footer>
+
+<script>
+/* =====================  CONTENT  =====================
+   This is the ONLY part you edit to update the site.  */
+
+const PROFILE = {
+  name: "Divya Patel",
+  creds: "MS · ASQ CQA · Six Sigma Green Belt",
+  lede: "Quality assurance professional turning complex processes into measurable, repeatable, defect-free outcomes — one improvement cycle at a time.",
+  badges: ["Certified Quality Auditor (CQA)", "Six Sigma Green Belt", "M.S.", "ASQ Member"]
+};
+
+const STATS = [
+  { num: "10+",   lbl: "Years in Quality" },
+  { num: "50+",   lbl: "Audits Led" },
+  { num: "$2M+",  lbl: "Cost Savings" },
+  { num: "40%",   lbl: "Avg. Defect Reduction" }
+];
+
+// Each milestone is a DMAIC "quality story". Edit / add freely.
+const MILESTONES = [
+  {
+    year: "2023 — Present",
+    role: "Senior Quality Engineer",
+    org: "Placeholder Manufacturing Co.",
+    tag: "Process Improvement",
+    problem: "High scrap rate on a critical production line was driving cost overruns and missed shipments.",
+    action: "Led a Six Sigma project: root-cause analysis, control charts, and a redesigned inspection workflow.",
+    beforeV: "8.2%", beforeL: "Scrap rate",
+    afterV: "2.1%", afterL: "Scrap rate",
+    delta: "−74%"
+  },
+  {
+    year: "2021 — 2023",
+    role: "Quality Auditor",
+    org: "Placeholder Medical Devices",
+    tag: "Auditing & Compliance",
+    problem: "Supplier non-conformances were slipping through, risking regulatory findings.",
+    action: "Built a risk-based audit program and CAPA tracking system across 30+ suppliers.",
+    beforeV: "23", beforeL: "Open findings",
+    afterV: "4", afterL: "Open findings",
+    delta: "−83%"
+  },
+  {
+    year: "2019 — 2021",
+    role: "Quality Analyst",
+    org: "Placeholder Consumer Goods",
+    tag: "Data & Metrics",
+    problem: "No visibility into quality KPIs; decisions were reactive, not data-driven.",
+    action: "Stood up an automated quality dashboard and monthly review cadence for leadership.",
+    beforeV: "0", beforeL: "Live KPIs",
+    afterV: "18", afterL: "Live KPIs",
+    delta: "+18"
+  },
+  {
+    year: "2017",
+    role: "M.S. Graduate",
+    org: "Placeholder University",
+    tag: "Education",
+    problem: "Wanted a rigorous foundation in quality systems and statistics.",
+    action: "Completed a Master of Science with a focus on quality management and applied statistics.",
+    beforeV: "—", beforeL: "",
+    afterV: "M.S.", afterL: "Degree earned",
+    delta: "🎓"
+  }
+];
+
+const DMAIC = [
+  { k: "D", n: "Define" }, { k: "M", n: "Measure" }, { k: "A", n: "Analyze" },
+  { k: "I", n: "Improve" }, { k: "C", n: "Control" }
+];
+
+/* =====================  RENDER  ===================== */
+document.getElementById('pName').textContent = PROFILE.name;
+document.getElementById('pCreds').textContent = PROFILE.creds;
+document.getElementById('pLede').textContent = PROFILE.lede;
+document.getElementById('yr').textContent = "2026";
+document.getElementById('pBadges').innerHTML =
+  PROFILE.badges.map(b => `<span class="badge">${b}</span>`).join('');
+document.getElementById('statsGrid').innerHTML =
+  STATS.map(s => `<div class="stat"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>`).join('');
+document.getElementById('dmaic').innerHTML =
+  DMAIC.map(p => `<div class="phase"><div class="k">${p.k}</div><div class="n">${p.n}</div></div>`).join('');
+
+document.getElementById('timeline').innerHTML = MILESTONES.map(m => `
+  <div class="node">
+    <span class="marker"></span>
+    <div class="year">${m.year}</div>
+    <div class="card">
+      <span class="tag">${m.tag}</span>
+      <div class="role">${m.role}</div>
+      <div class="org">${m.org}</div>
+      <div class="story">
+        <div class="row"><span class="lab">Problem</span><span>${m.problem}</span></div>
+        <div class="row"><span class="lab">Action</span><span>${m.action}</span></div>
+      </div>
+      <div class="metrics">
+        <div class="metric before"><div class="mv">${m.beforeV}</div><div class="ml">${m.beforeL||'&nbsp;'}</div></div>
+        <div class="arrow">→</div>
+        <div class="metric after"><div class="mv">${m.afterV}</div><div class="ml">${m.afterL||'&nbsp;'}</div></div>
+        <div class="delta">${m.delta}</div>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+/* scroll reveal */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: .15 });
+document.querySelectorAll('.node').forEach(n => io.observe(n));
+
+/* theme toggle */
+const root = document.documentElement;
+const btn = document.getElementById('themeBtn');
+btn.addEventListener('click', () => {
+  const dark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', dark ? 'light' : 'dark');
+  btn.textContent = dark ? '🌙 Theme' : '☀️ Theme';
+});
+</script>
+</body>
+</html>

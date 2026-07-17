@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Divya Patel — Portfolio (Concept 2: Blog Timeline)</title>
+<style>
+  /* ============================================================
+     CONCEPT 2 — Blog-style timeline + metrics dashboard
+     Animated count-up stats, filterable milestones, expandable
+     "posts", and a certifications wall.
+     ============================================================ */
+  :root {
+    --bg: #f7f7fb;
+    --surface: #ffffff;
+    --surface-2: #f0f1f7;
+    --text: #16181f;
+    --text-soft: #5b6070;
+    --line: #e4e6ef;
+    --accent: #4338ca;      /* indigo */
+    --accent-2: #0ea5a4;    /* teal */
+    --accent-soft: #e8e6fb;
+    --shadow: 0 12px 34px rgba(20,22,40,.09);
+    --radius: 18px;
+    --maxw: 1040px;
+    --font: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --serif: 'Fraunces', Georgia, serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0c0d14; --surface: #14161f; --surface-2: #1b1e2a;
+    --text: #eef0f7; --text-soft: #9ba1b5; --line: #262a38;
+    --accent: #8b83ff; --accent-2: #34d3d0; --accent-soft: #1c1a3a;
+    --shadow: 0 12px 34px rgba(0,0,0,.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s,color .3s; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--bg) 80%, transparent); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-weight: 800; letter-spacing: .3px; display:flex; gap:10px; align-items:center; }
+  .brand .sq { width: 12px; height: 12px; border-radius: 4px; background: linear-gradient(135deg,var(--accent),var(--accent-2)); }
+  .nav-links { display: flex; gap: 22px; align-items: center; }
+  .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: var(--accent); }
+  .toggle { cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+
+  /* Hero */
+  header.hero { padding: 80px 0 30px; position: relative; overflow: hidden; }
+  .blob { position:absolute; width: 480px; height: 480px; border-radius:50%; filter: blur(90px); opacity:.35; z-index:0; }
+  .blob.a { background: var(--accent); top:-160px; right:-120px; }
+  .blob.b { background: var(--accent-2); bottom:-220px; left:-140px; }
+  .hero .wrap { position: relative; z-index: 1; display:grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items:center; }
+  .eyebrow { color: var(--accent); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 12px; }
+  h1 { font-family: var(--serif); font-size: clamp(38px, 6vw, 66px); line-height: 1.04; margin: 12px 0 8px; font-weight: 600; }
+  .creds { color: var(--text-soft); font-weight: 700; font-size: 15px; }
+  .lede { color: var(--text-soft); font-size: 18px; margin-top: 16px; max-width: 520px; }
+  .cta { display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; }
+  .btn { text-decoration:none; font-weight:700; font-size:14px; padding:12px 20px; border-radius:999px; }
+  .btn-primary { background: linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; }
+  .btn-ghost { border:1px solid var(--line); color:var(--text); background:var(--surface); }
+  .avatar { aspect-ratio: 1; border-radius: 24px; background: var(--surface-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:80px; color:var(--accent);
+    box-shadow: var(--shadow); }
+
+  /* Metrics dashboard */
+  .dash { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin: 36px 0 10px; }
+  .kpi { background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); position:relative; overflow:hidden; }
+  .kpi::after { content:""; position:absolute; left:0; bottom:0; height:4px; width:100%; background: linear-gradient(90deg,var(--accent),var(--accent-2)); opacity:.7; }
+  .kpi .num { font-family: var(--serif); font-size: 40px; font-weight:700; line-height:1; }
+  .kpi .lbl { font-size:13px; color:var(--text-soft); margin-top:8px; }
+
+  section.section { padding: 60px 0; }
+  .section-head h2 { font-family: var(--serif); font-size: clamp(28px,4vw,40px); font-weight:600; }
+  .section-head p { color: var(--text-soft); margin-top:6px; }
+
+  /* Filters */
+  .filters { display:flex; gap:8px; flex-wrap:wrap; margin: 24px 0 34px; }
+  .chip { cursor:pointer; font-size:13px; font-weight:600; padding:8px 16px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--text-soft); }
+  .chip.active { background: var(--accent); color:#fff; border-color: var(--accent); }
+
+  /* Timeline (alternating) */
+  .tl { position: relative; }
+  .tl::before { content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%); background: var(--line); }
+  .post { position: relative; width: 50%; padding: 0 40px 40px; opacity:0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+  .post.in { opacity:1; transform:none; }
+  .post:nth-child(odd) { left: 0; text-align: right; }
+  .post:nth-child(even) { left: 50%; }
+  .post .dot { position:absolute; top: 6px; width:16px; height:16px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 5px var(--bg); }
+  .post:nth-child(odd) .dot { right: -8px; }
+  .post:nth-child(even) .dot { left: -8px; }
+  .post .date { font-size:13px; font-weight:700; color:var(--accent); letter-spacing:.5px; }
+  .pcard { background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow); margin-top:8px; text-align:left; }
+  .pcard .cat { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--accent-2); margin-bottom:8px; }
+  .pcard h3 { font-family:var(--serif); font-size:20px; font-weight:600; }
+  .pcard .org { color:var(--text-soft); font-size:14px; margin-bottom:10px; }
+  .pcard .excerpt { font-size:15px; color:var(--text); }
+  .pcard .full { max-height:0; overflow:hidden; transition: max-height .4s ease; color: var(--text-soft); font-size:15px; }
+  .pcard .full.open { max-height: 400px; margin-top:10px; }
+  .readmore { margin-top:6px; background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer; font-size:14px; padding:8px 0; }
+  .impact-pills { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .pill { font-size:12px; font-weight:700; background:var(--surface-2); color:var(--accent); padding:5px 10px; border-radius:999px; }
+
+  /* Certs wall */
+  .certs { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-top: 30px; }
+  .cert { background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding: 24px; text-align:center; box-shadow: var(--shadow); }
+  .cert .ico { font-size:34px; }
+  .cert .t { font-weight:700; margin-top:10px; }
+  .cert .s { font-size:13px; color:var(--text-soft); }
+
+  footer { border-top:1px solid var(--line); padding:50px 0; text-align:center; color:var(--text-soft); }
+  footer a { color: var(--accent); text-decoration:none; display:inline-block; padding:4px 2px; }
+  .preview-flag { position: fixed; bottom:16px; left:16px; z-index:60; background: var(--accent); color:#fff; font-size:12px; font-weight:700; padding:8px 14px; border-radius:999px; box-shadow:var(--shadow); text-decoration:none; }
+
+  @media (max-width: 820px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .avatar { max-width: 220px; }
+    .dash { grid-template-columns: repeat(2,1fr); }
+    .certs { grid-template-columns: repeat(2,1fr); }
+    .tl::before { left: 8px; }
+    .post { width:100%; left:0 !important; text-align:left !important; padding-left:36px; padding-right:0; }
+    .post .dot { left:0 !important; right:auto !important; }
+    .nav-links a:not(.toggle) { display:none; }
+  }
+</style>
+</head>
+<body>
+<a class="preview-flag" href="previews.html">← Back to previews · Concept 2</a>
+
+<nav><div class="wrap">
+  <div class="brand"><span class="sq"></span> Divya Patel</div>
+  <div class="nav-links">
+    <a href="#dash">Impact</a>
+    <a href="#journey">Journey</a>
+    <a href="#certs">Certifications</a>
+    <button class="toggle" id="themeBtn">🌙 Theme</button>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <span class="blob a"></span><span class="blob b"></span>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Quality · Auditing · Process Excellence</div>
+      <h1 id="pName"></h1>
+      <div class="creds" id="pCreds"></div>
+      <p class="lede" id="pLede"></p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#journey">Read the journey</a>
+        <a class="btn btn-ghost" href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="avatar" id="avatar">DP</div>
+  </div>
+</header>
+
+<div class="wrap" id="dash"><div class="dash" id="dashGrid"></div></div>
+
+<section class="section" id="journey">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Career Journey</h2>
+      <p>A blog-style timeline of roles, projects, and wins. Filter by focus, click to read more.</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="tl" id="tl"></div>
+  </div>
+</section>
+
+<section class="section" id="certs">
+  <div class="wrap">
+    <div class="section-head"><h2>Certifications & Credentials</h2><p>The foundation behind the work.</p></div>
+    <div class="certs" id="certsGrid"></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 style="font-family:var(--serif);font-weight:600;margin-bottom:10px;">Let's build quality together</h2>
+    <p>Open to quality engineering, auditing & continuous-improvement roles.</p>
+    <p style="margin-top:14px;"><a href="#">LinkedIn</a> · <a href="#">Email</a> · <a href="#">Résumé (PDF)</a></p>
+    <p style="margin-top:24px;font-size:13px;opacity:.7;">© <span id="yr"></span> Divya Patel · Built as a static site (Concept 2)</p>
+  </div>
+</footer>
+
+<script>
+/* =====================  CONTENT  ===================== */
+const PROFILE = {
+  name: "Divya Patel",
+  creds: "MS · ASQ CQA · Six Sigma Green Belt",
+  lede: "I help organizations ship better products with fewer defects — through rigorous auditing, data-driven analysis, and relentless continuous improvement."
+};
+
+const KPIS = [
+  { target: 10,  suffix: "+", lbl: "Years in Quality" },
+  { target: 50,  suffix: "+", lbl: "Audits Led" },
+  { target: 40,  suffix: "%", lbl: "Avg. Defect Reduction" },
+  { target: 2,   suffix: "M+", prefix: "$", lbl: "Cost Savings" }
+];
+
+const CATEGORIES = ["All", "Process Improvement", "Auditing", "Leadership", "Education"];
+
+const POSTS = [
+  {
+    date: "2023 — Present", cat: "Process Improvement",
+    title: "Senior Quality Engineer", org: "Placeholder Manufacturing Co.",
+    excerpt: "Led a Six Sigma initiative that cut scrap rate from 8.2% to 2.1% on a critical line.",
+    full: "Using DMAIC, I ran root-cause analysis with control charts, redesigned the inspection workflow, and standardized work instructions. The result held for 12+ months under statistical process control.",
+    pills: ["−74% scrap", "$800K saved", "SPC"]
+  },
+  {
+    date: "2021 — 2023", cat: "Auditing",
+    title: "Quality Auditor", org: "Placeholder Medical Devices",
+    excerpt: "Built a risk-based supplier audit program across 30+ suppliers, closing 83% of open findings.",
+    full: "Established CAPA tracking, standardized audit checklists to ISO 13485, and coached suppliers through corrective actions — turning audits from a checkbox into a partnership.",
+    pills: ["ISO 13485", "30+ suppliers", "CAPA"]
+  },
+  {
+    date: "2019 — 2021", cat: "Leadership",
+    title: "Quality Analyst", org: "Placeholder Consumer Goods",
+    excerpt: "Introduced a live quality dashboard, shifting leadership from reactive to data-driven decisions.",
+    full: "Automated data collection from three systems into 18 live KPIs, and led a monthly quality review that became the company's forum for prioritizing improvements.",
+    pills: ["18 KPIs", "Dashboards", "Data-driven"]
+  },
+  {
+    date: "2017", cat: "Education",
+    title: "Master of Science", org: "Placeholder University",
+    excerpt: "Completed an M.S. with a focus on quality management and applied statistics.",
+    full: "Coursework spanned design of experiments, statistical process control, and reliability engineering — the rigorous foundation behind everything since.",
+    pills: ["M.S.", "Statistics", "DOE"]
+  }
+];
+
+const CERTS = [
+  { ico: "🔎", t: "ASQ CQA", s: "Certified Quality Auditor" },
+  { ico: "📊", t: "Six Sigma", s: "Green Belt (SSGB)" },
+  { ico: "🎓", t: "M.S.", s: "Quality Management" },
+  { ico: "🏅", t: "ASQ Member", s: "Am. Society for Quality" }
+];
+
+/* =====================  RENDER  ===================== */
+document.getElementById('pName').textContent = PROFILE.name;
+document.getElementById('pCreds').textContent = PROFILE.creds;
+document.getElementById('pLede').textContent = PROFILE.lede;
+document.getElementById('yr').textContent = "2026";
+
+document.getElementById('dashGrid').innerHTML = KPIS.map((k,i) =>
+  `<div class="kpi"><div class="num" data-target="${k.target}" data-prefix="${k.prefix||''}" data-suffix="${k.suffix||''}">${k.prefix||''}0${k.suffix||''}</div><div class="lbl">${k.lbl}</div></div>`).join('');
+
+document.getElementById('filters').innerHTML = CATEGORIES.map((c,i) =>
+  `<button class="chip ${i===0?'active':''}" data-cat="${c}">${c}</button>`).join('');
+
+document.getElementById('certsGrid').innerHTML = CERTS.map(c =>
+  `<div class="cert"><div class="ico">${c.ico}</div><div class="t">${c.t}</div><div class="s">${c.s}</div></div>`).join('');
+
+function renderPosts(filter) {
+  const list = POSTS.filter(p => filter === "All" || p.cat === filter);
+  document.getElementById('tl').innerHTML = list.map(p => `
+    <article class="post" data-cat="${p.cat}">
+      <span class="dot"></span>
+      <div class="date">${p.date}</div>
+      <div class="pcard">
+        <span class="cat">${p.cat}</span>
+        <h3>${p.title}</h3>
+        <div class="org">${p.org}</div>
+        <div class="excerpt">${p.excerpt}</div>
+        <div class="full">${p.full}</div>
+        <div class="impact-pills">${p.pills.map(x=>`<span class="pill">${x}</span>`).join('')}</div>
+        <button class="readmore">Read more ↓</button>
+      </div>
+    </article>`).join('');
+  observePosts();
+  wireReadmore();
+}
+
+function wireReadmore() {
+  document.querySelectorAll('.readmore').forEach(b => b.addEventListener('click', () => {
+    const full = b.parentElement.querySelector('.full');
+    const open = full.classList.toggle('open');
+    b.textContent = open ? 'Read less ↑' : 'Read more ↓';
+  }));
+}
+
+let io;
+function observePosts() {
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold:.12 });
+  document.querySelectorAll('.post').forEach(p => io.observe(p));
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  renderPosts(e.target.dataset.cat);
+});
+
+renderPosts("All");
+
+/* animated count-up when dashboard enters view */
+const countIO = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.target, pre = el.dataset.prefix, suf = el.dataset.suffix;
+    let cur = 0; const step = Math.max(1, target/40);
+    const t = setInterval(() => {
+      cur += step;
+      if (cur >= target) { cur = target; clearInterval(t); }
+      el.textContent = pre + (Number.isInteger(target) ? Math.round(cur) : cur.toFixed(1)) + suf;
+    }, 24);
+    countIO.unobserve(el);
+  });
+}, { threshold: .5 });
+document.querySelectorAll('.kpi .num').forEach(n => countIO.observe(n));
+
+/* theme toggle */
+const root = document.documentElement, btn = document.getElementById('themeBtn');
+btn.addEventListener('click', () => {
+  const dark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', dark ? 'light' : 'dark');
+  btn.textContent = dark ? '🌙 Theme' : '☀️ Theme';
+});
+</script>
+</body>
+</html>

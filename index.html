@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Divya Patel — Quality & Compliance · Achievement Timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     CONCEPT 3 v2 — "Achievement Moments" · pharma-modern edition
+     Dark-first, glassmorphism, animated molecules, glowing
+     scroll-fill timeline. Narrative feed of career moments.
+     ============================================================ */
+
+  :root {
+    --bg: #06100e;
+    --bg-2: #0a1a17;
+    --surface: rgba(255,255,255,.045);
+    --surface-solid: #0e211d;
+    --glass-border: rgba(255,255,255,.09);
+    --text: #e9f5f1;
+    --text-soft: #8fa8a1;
+    --teal: #2dd4bf;
+    --cyan: #38bdf8;
+    --mint: #6ee7b7;
+    --gold: #fbbf24;
+    --glow: rgba(45,212,191,.35);
+    --radius: 20px;
+    --maxw: 860px;
+    --font: 'Inter', system-ui, sans-serif;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+  [data-theme="light"] {
+    --bg: #f4faf8;
+    --bg-2: #e8f4f0;
+    --surface: rgba(255,255,255,.75);
+    --surface-solid: #ffffff;
+    --glass-border: rgba(13,60,50,.1);
+    --text: #0c1f1a;
+    --text-soft: #52716a;
+    --teal: #0d9488;
+    --cyan: #0284c7;
+    --mint: #059669;
+    --gold: #d97706;
+    --glow: rgba(13,148,136,.22);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background .4s, color .4s;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ================= animated backdrop ================= */
+  .backdrop { position: fixed; inset: 0; z-index: -2; overflow: hidden;
+    background:
+      radial-gradient(900px 600px at 85% -5%, color-mix(in srgb, var(--cyan) 14%, transparent), transparent 60%),
+      radial-gradient(800px 700px at -10% 40%, color-mix(in srgb, var(--teal) 12%, transparent), transparent 60%),
+      var(--bg);
+  }
+  /* hex-grid — molecular lattice */
+  .backdrop::after { content: ""; position: absolute; inset: 0; opacity: .35;
+    background-image: url("data:image/svg+xml,%3Csvg width='56' height='97' viewBox='0 0 56 97' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 1 54 16v32L28 63 2 48V16z M28 63v33 M54 48l24 15 M2 48l-24 15' fill='none' stroke='%232dd4bf' stroke-opacity='.09' stroke-width='1'/%3E%3C/svg%3E");
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 10%, #000 20%, transparent 80%);
+    animation: latticeDrift 60s linear infinite;
+  }
+  @keyframes latticeDrift { to { background-position: 0 -970px; } }
+
+  .blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: .5; }
+  .blob.b1 { width: 460px; height: 460px; background: color-mix(in srgb, var(--teal) 35%, transparent); top: -140px; right: -100px; animation: drift1 18s ease-in-out infinite alternate; }
+  .blob.b2 { width: 380px; height: 380px; background: color-mix(in srgb, var(--cyan) 30%, transparent); top: 40vh; left: -160px; animation: drift2 22s ease-in-out infinite alternate; }
+  @keyframes drift1 { to { transform: translate(-60px, 80px) scale(1.15); } }
+  @keyframes drift2 { to { transform: translate(80px, -60px) scale(1.1); } }
+
+  /* floating molecules */
+  .molecule { position: absolute; z-index: -1; opacity: .5; animation: floatMol var(--dur, 14s) ease-in-out infinite alternate; }
+  .molecule svg { display: block; }
+  @keyframes floatMol {
+    from { transform: translateY(0) rotate(0deg); }
+    to   { transform: translateY(-34px) rotate(14deg); }
+  }
+  /* capsule pills floating */
+  .capsule { position: absolute; z-index: -1; width: 54px; height: 22px; border-radius: 999px; opacity: .5;
+    background: linear-gradient(90deg, var(--teal) 50%, color-mix(in srgb, var(--surface-solid) 70%, #fff 10%) 50%);
+    border: 1px solid var(--glass-border);
+    animation: floatMol var(--dur, 16s) ease-in-out infinite alternate; }
+
+  /* ================= nav ================= */
+  nav { position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    border-bottom: 1px solid var(--glass-border); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--display); font-weight: 700; letter-spacing: .3px; display: flex; align-items: center; gap: 10px; }
+  .brand .pulse-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); position: relative; }
+  .brand .pulse-dot::after { content: ""; position: absolute; inset: -5px; border-radius: 50%;
+    border: 2px solid var(--teal); animation: ping 2.2s var(--ease) infinite; }
+  @keyframes ping { 0% { transform: scale(.5); opacity: 1; } 80%, 100% { transform: scale(1.6); opacity: 0; } }
+  .nav-links { display: flex; gap: 20px; align-items: center; }
+  .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--teal); }
+  .toggle { cursor: pointer; border: 1px solid var(--glass-border); background: var(--surface); color: var(--text);
+    border-radius: 999px; padding: 6px 13px; font-size: 13px; backdrop-filter: blur(8px); transition: border-color .2s; }
+  .toggle:hover { border-color: var(--teal); }
+
+  /* ================= hero ================= */
+  header.hero { position: relative; padding: 92px 0 64px; text-align: center; }
+  .avatar-ring { width: 118px; height: 118px; margin: 0 auto 22px; border-radius: 50%; position: relative;
+    background: conic-gradient(var(--teal), var(--cyan), var(--mint), var(--teal)); padding: 3px;
+    animation: spinRing 9s linear infinite; }
+  .avatar-ring .avatar { width: 100%; height: 100%; border-radius: 50%; background: var(--surface-solid);
+    display: flex; align-items: center; justify-content: center; font-family: var(--display);
+    font-size: 40px; font-weight: 700; color: var(--teal); animation: spinRing 9s linear infinite reverse; }
+  @keyframes spinRing { to { transform: rotate(360deg); } }
+  .eyebrow { color: var(--teal); font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 12px;
+    opacity: 0; animation: riseIn .8s var(--ease) .1s forwards; }
+  h1 { font-family: var(--display); font-size: clamp(40px, 7vw, 68px); line-height: 1.02; margin: 12px 0 10px;
+    font-weight: 700; letter-spacing: -1px;
+    background: linear-gradient(100deg, var(--text) 30%, var(--teal) 55%, var(--cyan) 75%, var(--text) 95%);
+    background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 7s ease-in-out infinite, riseIn .8s var(--ease) .2s backwards; }
+  @keyframes shimmer { 0%,100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+  .role { color: var(--text-soft); font-size: 18px; font-weight: 500; opacity: 0; animation: riseIn .8s var(--ease) .35s forwards; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px auto 0; justify-content: center;
+    opacity: 0; animation: riseIn .8s var(--ease) .5s forwards; }
+  .badge { font-size: 12.5px; font-weight: 600; padding: 8px 16px; border-radius: 999px;
+    background: var(--surface); color: var(--mint); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px); transition: transform .25s var(--ease), border-color .25s, box-shadow .25s; }
+  .badge:hover { transform: translateY(-3px); border-color: var(--teal); box-shadow: 0 6px 24px var(--glow); }
+  .lede { font-size: 17.5px; color: var(--text-soft); max-width: 580px; margin: 20px auto 0;
+    opacity: 0; animation: riseIn .8s var(--ease) .65s forwards; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  /* ECG divider — quality heartbeat */
+  .ecg { display: block; width: min(560px, 86%); margin: 44px auto 0; overflow: visible;
+    opacity: 0; animation: riseIn .8s var(--ease) .8s forwards; }
+  .ecg path { fill: none; stroke: var(--teal); stroke-width: 2; stroke-linecap: round;
+    stroke-dasharray: 640; stroke-dashoffset: 640; animation: ecgDraw 3.4s linear .9s infinite;
+    filter: drop-shadow(0 0 6px var(--glow)); }
+  @keyframes ecgDraw { 0% { stroke-dashoffset: 640; } 55% { stroke-dashoffset: 0; } 78% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+
+  /* ================= filters ================= */
+  .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; padding: 34px 0 6px; }
+  .chip { cursor: pointer; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px;
+    border: 1px solid var(--glass-border); background: var(--surface); color: var(--text-soft);
+    backdrop-filter: blur(8px); transition: all .25s var(--ease); }
+  .chip:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+  .chip.active { background: linear-gradient(120deg, var(--teal), var(--cyan)); color: #04211c;
+    border-color: transparent; box-shadow: 0 6px 22px var(--glow); }
+
+  /* ================= timeline feed ================= */
+  .feed { position: relative; padding: 34px 0 70px; }
+  .feed .spine, .feed .spine-fill { position: absolute; left: 25px; top: 14px; bottom: 14px; width: 2px; border-radius: 2px; }
+  .feed .spine { background: color-mix(in srgb, var(--text-soft) 22%, transparent); }
+  .feed .spine-fill { bottom: auto; height: 0;
+    background: linear-gradient(var(--teal), var(--cyan));
+    box-shadow: 0 0 12px var(--glow); transition: height .2s linear; }
+
+  .moment { position: relative; padding: 0 0 46px 72px; opacity: 0; transform: translateY(34px);
+    filter: blur(6px); transition: opacity .7s var(--ease), transform .7s var(--ease), filter .7s var(--ease); }
+  .moment.in { opacity: 1; transform: none; filter: blur(0); }
+
+  /* hexagon molecular marker */
+  .marker { position: absolute; left: 11px; top: 4px; width: 30px; height: 30px; z-index: 1; }
+  .marker .hex { width: 100%; height: 100%; background: var(--surface-solid); border: 2px solid var(--teal);
+    clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+    display: flex; align-items: center; justify-content: center; }
+  .marker .hex::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+  .moment.in .marker { animation: markerPop .5s var(--ease); }
+  @keyframes markerPop { 0% { transform: scale(.4); } 70% { transform: scale(1.25); } 100% { transform: scale(1); } }
+
+  .when { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--teal);
+    letter-spacing: 2px; text-transform: uppercase; }
+
+  .mcard { background: var(--surface); border: 1px solid var(--glass-border); border-radius: var(--radius);
+    backdrop-filter: blur(14px); margin-top: 12px; overflow: hidden; position: relative;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s; }
+  .mcard::before { content: ""; position: absolute; inset: 0; border-radius: var(--radius); padding: 1px;
+    background: linear-gradient(140deg, var(--teal), transparent 30%, transparent 70%, var(--cyan));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .4s; pointer-events: none; }
+  .mcard:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,.35), 0 0 40px var(--glow); }
+  .mcard:hover::before { opacity: 1; }
+
+  .mbody { padding: 24px 26px 22px; }
+  .mtag { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
+  .mtitle { font-family: var(--display); font-size: 24px; font-weight: 700; line-height: 1.22; letter-spacing: -.3px; }
+  .morg { color: var(--text-soft); font-size: 14px; margin: 5px 0 13px; font-weight: 500; }
+  .mstory { font-size: 15.5px; color: color-mix(in srgb, var(--text) 88%, transparent); white-space: pre-line; }
+  .mstory.clamp { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .readmore { margin-top: 6px; background: none; border: none; color: var(--teal); font-weight: 700;
+    cursor: pointer; font-size: 14px; padding: 8px 0; font-family: var(--font); transition: color .2s; }
+  .readmore:hover { color: var(--mint); }
+  .mlink { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 13.5px;
+    font-weight: 600; color: var(--cyan); text-decoration: none; padding: 6px 0; }
+  .mlink:hover { text-decoration: underline; }
+
+  /* ================= gallery ================= */
+  .gallery { display: grid; gap: 3px; cursor: pointer; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; display: block; background: var(--bg-2); }
+  .gallery.g1 { grid-template-columns: 1fr; }
+  .gallery.g1 .gitem { aspect-ratio: 16/9; }
+  .gallery.g2 { grid-template-columns: 1fr 1fr; }
+  .gallery.g2 .gitem { aspect-ratio: 4/3; }
+  .gallery.g3plus { grid-template-columns: 2fr 1fr; grid-template-rows: minmax(0,1fr) minmax(0,1fr); aspect-ratio: 16/10; }
+  .gallery.g3plus .gitem:first-child { grid-row: span 2; }
+  .gitem { position: relative; overflow: hidden; min-height: 0; }
+  /* documents (certificates) are shown whole, never cropped */
+  .gallery img.fit-contain { object-fit: contain; }
+  .gallery.g1 .gitem:has(.fit-contain) { aspect-ratio: 4/3; }
+  .gitem img { transition: transform .6s var(--ease), filter .6s var(--ease); }
+  .gitem:hover img { transform: scale(1.06); filter: brightness(1.08); }
+  .more-overlay { position: absolute; inset: 0; background: rgba(4,16,13,.6); backdrop-filter: blur(2px);
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    font-family: var(--display); font-size: 28px; font-weight: 700; }
+
+  /* ================= lightbox ================= */
+  .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(3,10,8,.94); backdrop-filter: blur(10px);
+    display: none; align-items: center; justify-content: center; flex-direction: column; padding: 24px; }
+  .lightbox.open { display: flex; animation: lbIn .3s var(--ease); }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox img { max-width: min(92vw, 1100px); max-height: 76vh; border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 60px var(--glow); animation: lbImgIn .35s var(--ease); }
+  @keyframes lbImgIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+  .lb-caption { color: #bfe3da; font-size: 14px; margin-top: 16px; }
+  .lb-count { color: #6c8a81; font-size: 13px; margin-top: 4px; font-family: var(--display); letter-spacing: 2px; }
+  .lb-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.16); color: #fff; font-size: 26px; width: 50px; height: 50px;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s, box-shadow .2s; }
+  .lb-btn:hover { background: rgba(45,212,191,.25); box-shadow: 0 0 24px var(--glow); }
+  .lb-prev { left: 22px; } .lb-next { right: 22px; }
+  .lb-close { position: absolute; top: 18px; right: 24px; background: none; border: none; color: #fff;
+    font-size: 36px; cursor: pointer; line-height: 1; transition: transform .2s; }
+  .lb-close:hover { transform: rotate(90deg); }
+
+  /* ================= footer ================= */
+  footer { border-top: 1px solid var(--glass-border); padding: 54px 0; text-align: center; color: var(--text-soft);
+    background: color-mix(in srgb, var(--bg-2) 60%, transparent); }
+  footer h2 { font-family: var(--display); font-weight: 700; margin-bottom: 10px; color: var(--text); font-size: 26px; }
+  footer a { color: var(--teal); text-decoration: none; font-weight: 600; display: inline-block; padding: 4px 2px; }
+  footer a:hover { text-decoration: underline; }
+
+  .preview-flag { position: fixed; bottom: 16px; left: 16px; z-index: 60; background: linear-gradient(120deg, var(--teal), var(--cyan));
+    color: #04211c; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 999px;
+    box-shadow: 0 8px 24px var(--glow); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .feed .spine, .feed .spine-fill { left: 17px; }
+    .moment { padding-left: 50px; }
+    .marker { left: 3px; }
+    .gallery.g3plus { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; aspect-ratio: auto; }
+    .gallery.g3plus .gitem:first-child { grid-column: span 2; grid-row: auto; aspect-ratio: 16/10; }
+    .gallery.g3plus .gitem { aspect-ratio: 4/3; }
+    .gallery.g3plus .gitem:first-child:has(.fit-contain) { aspect-ratio: 5/4; }
+    .nav-links a:not(.toggle) { display: none; }
+    .molecule, .capsule { display: none; }
+    .lb-btn { width: 40px; height: 40px; font-size: 20px; background: rgba(10,26,23,.6); }
+    .lb-prev { left: 8px; } .lb-next { right: 8px; }
+    .lightbox { padding: 12px; }
+    .lightbox img { max-width: calc(100vw - 24px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01s !important; transition-duration: .01s !important; }
+  }
+</style>
+</head>
+<body>
+<div class="backdrop"><span class="blob b1"></span><span class="blob b2"></span></div>
+
+<nav><div class="wrap">
+  <div class="brand"><span class="pulse-dot"></span> Divya Patel</div>
+  <div class="nav-links">
+    <a href="#moments">Moments</a>
+    <a href="#contact">Contact</a>
+    <button class="toggle" id="themeBtn">☀️ Light</button>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <!-- floating pharma decor (positioned via JS for spread) -->
+  <div id="decor"></div>
+  <div class="wrap">
+    <div class="avatar-ring"><div class="avatar">DP</div></div>
+    <div class="eyebrow">Quality · Compliance · Pharmaceutical Manufacturing</div>
+    <h1 id="pName"></h1>
+    <div class="role" id="pRole"></div>
+    <div class="badges" id="pBadges"></div>
+    <p class="lede" id="pLede"></p>
+    <!-- ECG pulse — the heartbeat of quality -->
+    <svg class="ecg" viewBox="0 0 560 60" aria-hidden="true">
+      <path d="M0 30 H160 L180 30 L192 12 L206 48 L218 30 H300 L316 30 L328 6 L344 54 L358 30 H560" />
+    </svg>
+  </div>
+</header>
+
+<section id="moments">
+  <div class="wrap">
+    <div class="filters" id="filters"></div>
+    <div class="feed" id="feed"></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's connect</h2>
+    <p><a href="https://www.linkedin.com/in/divya-patel-ms-asq-cqa-ssgb-57b9aa27/" target="_blank" rel="noopener">LinkedIn</a> · <a href="#">Email</a></p>
+    <p style="margin-top:22px;font-size:13px;opacity:.7;">© 2026 Divya Patel</p>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <img id="lbImg" alt="" />
+  <div class="lb-caption" id="lbCaption"></div>
+  <div class="lb-count" id="lbCount"></div>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next">›</button>
+</div>
+
+<script>
+/* ============================================================
+   CONTENT — the only part you edit to update the site.
+   Add a moment: one object in MOMENTS (newest first) + photos
+   in the images/ folder.
+   ============================================================ */
+
+const PROFILE = {
+  name: "Divya Patel",
+  role: "Manager — Quality Assurance & Compliance · Lupin Pharmaceuticals",
+  lede: "A career in pharmaceutical quality — the audits, awards, certifications, and milestones that tell the story.",
+  badges: ["MS", "ASQ-CQA", "Six Sigma Green Belt", "ASQ Member"]
+};
+
+const CATEGORIES = ["All", "Award", "Certification", "Project", "Milestone", "Education"];
+
+const MOMENTS = [
+  {
+    date: "2026 — Ongoing",
+    category: "Project",
+    title: "Veeva Vault Training — Digital Quality Transformation",
+    org: "Lupin Pharmaceuticals · Somerset, NJ",
+    story: `Leading hands-on Veeva Vault training for Lupin employees as our site adopts Veeva as the new home for quality documentation.
+
+Session by session, we walk through logging in, navigating the Vault workspace, document libraries, and viewing controlled documents through their lifecycle — turning a new system into a familiar everyday tool.
+
+In a regulated environment, adoption doesn't happen at rollout — it happens when people feel confident using the system in their daily work. Watching colleagues go from cautious first logins to confidently finding and owning their documents is the most rewarding part of this project.`,
+    images: [
+      { src: "images/veeva-1.jpg", alt: "Divya leading a Veeva Vault navigation training session at Lupin" },
+      { src: "images/veeva-2.jpg", alt: "Presenting the Viewing Documents module of Veeva Vault training" },
+      { src: "images/veeva-3.jpg", alt: "Training room during the Logging in to Vault session" },
+      { src: "images/veeva-4.jpg", alt: "Walking trainees through the Vault home tab and navigation" },
+      { src: "images/veeva-5.jpg", alt: "Document Libraries training session with Lupin employees" },
+      { src: "images/veeva-6.jpg", alt: "Viewing Documents session — document lifecycle states in Vault" }
+    ],
+    link: null
+  },
+  {
+    date: "December 2025",
+    category: "Award",
+    title: "Catalyst Team of the Year",
+    org: "Lupin Pharmaceuticals · Somerset Audit & Compliance Team",
+    story: "Honored to be part of the Catalyst Team of the Year and to receive this recognition at our year-end holiday event at Lupin Pharmaceuticals. Grateful for the continued support of Lupin leadership and incredible teamwork of the Somerset Audit & Compliance team. This award truly reflects a collective effort, and I'm proud to be part of such an inspiring team.",
+    images: [
+      { src: "images/catalyst-3.jpg", alt: "Catalyst Team of the Year Award certificate presented to Divyaben Patel", fit: "contain" },
+      { src: "images/catalyst-2.jpg", alt: "Somerset Audit & Compliance team receiving the award on stage" },
+      { src: "images/catalyst-1.jpg", alt: "Team members with their certificates at the Lupin year-end holiday event" },
+      { src: "images/catalyst-4.jpg", alt: "Catalyst Team of the Year — Somerset Audit & Compliance team on screen" }
+    ],
+    link: null
+  },
+  {
+    date: "October 2025",
+    category: "Certification",
+    title: "ASQ Certified Quality Auditor (CQA)",
+    org: "American Society for Quality",
+    story: `Proud to share: I am now an ASQ Certified Quality Auditor (CQA)!
+
+Preparing for the CQA exam while working full-time and managing family responsibilities pushed me outside my comfort zone. There were moments of doubt — failing my practice exam shook my confidence — but I reminded myself why I started. So I pushed harder, especially in the final two weeks of intense study.
+
+The 5.5-hour exam tested not just my knowledge, but my mental strength. Seeing "PASSED" on the screen was more than a result — it was a reminder that we can achieve anything when we set our minds to it.
+
+I'm incredibly thankful to my Quality Head Suneel Chhatre for inspiring, supporting, and pushing me to grow. Leaders who invest in people create more leaders, not followers — and I'm grateful to be under such leadership.
+
+Passing this just before Diwali made the celebration extra meaningful — a personal light earned through dedication and perseverance.
+
+To anyone preparing for a certification or working toward a personal goal while juggling life — keep going. Your future self will thank you.
+
+Grateful for my family's support and proud to bring this value back into my professional journey in Quality & Compliance.`,
+    images: [
+      { src: "images/cqa-1.jpg", alt: "ASQ Certified Quality Auditor verified certificate", fit: "contain" }
+    ],
+    link: { label: "Verified credential", url: "https://lnkd.in/e7a_EUxs" }
+  },
+  {
+    date: "Placeholder — year",
+    category: "Milestone",
+    title: "Manager, Quality Assurance & Compliance",
+    org: "Lupin Pharmaceuticals · Somerset, NJ",
+    story: "Placeholder — the story of stepping into leadership at Lupin: the team, the scope, and what this milestone means. Replace with Divya's own words.",
+    images: [
+      { src: "images/ph-6.svg", alt: "Placeholder — replace with a real photo" }
+    ],
+    link: null
+  },
+  {
+    date: "Placeholder — year",
+    category: "Certification",
+    title: "Six Sigma Green Belt (SSGB)",
+    org: "Placeholder — certifying body",
+    story: "Placeholder — the Green Belt journey: the training, the project that earned it, and how she uses it every day in pharmaceutical quality.",
+    images: [
+      { src: "images/ph-5.svg", alt: "Placeholder — replace with a real photo" }
+    ],
+    link: null
+  },
+  {
+    date: "Placeholder — year",
+    category: "Education",
+    title: "Master of Science",
+    org: "Placeholder University",
+    story: "Placeholder — completing the M.S.: the focus of study and the foundation it built for a career in quality and compliance.",
+    images: [
+      { src: "images/ph-2.svg", alt: "Placeholder — replace with a real photo" }
+    ],
+    link: null
+  }
+];
+
+/* ============================================================
+   RENDER — no need to edit below this line.
+   ============================================================ */
+
+document.getElementById('pName').textContent = PROFILE.name;
+document.getElementById('pRole').textContent = PROFILE.role;
+document.getElementById('pLede').textContent = PROFILE.lede;
+document.getElementById('pBadges').innerHTML =
+  PROFILE.badges.map(b => `<span class="badge">${b}</span>`).join('');
+
+/* floating pharma decor: molecules + capsules scattered in hero */
+const molSVG = (size, color) => `
+<svg width="${size}" height="${size}" viewBox="0 0 100 100" fill="none">
+  <polygon points="50,8 86,29 86,71 50,92 14,71 14,29" stroke="${color}" stroke-width="2.5" opacity=".7"/>
+  <circle cx="50" cy="8" r="6" fill="${color}"/>
+  <circle cx="86" cy="71" r="6" fill="${color}" opacity=".7"/>
+  <circle cx="14" cy="29" r="6" fill="${color}" opacity=".5"/>
+  <line x1="50" y1="8" x2="50" y2="-8" stroke="${color}" stroke-width="2.5" opacity=".5"/>
+</svg>`;
+const decor = document.getElementById('decor');
+const spots = [
+  { top: '12%', left: '7%',  size: 64, dur: '13s', kind: 'mol' },
+  { top: '58%', left: '4%',  size: 42, dur: '17s', kind: 'mol' },
+  { top: '16%', left: '86%', size: 52, dur: '15s', kind: 'mol' },
+  { top: '64%', left: '90%', size: 38, dur: '19s', kind: 'mol' },
+  { top: '38%', left: '13%', dur: '14s', kind: 'cap' },
+  { top: '32%', left: '82%', dur: '18s', kind: 'cap' }
+];
+decor.innerHTML = spots.map(s => s.kind === 'mol'
+  ? `<span class="molecule" style="top:${s.top};left:${s.left};--dur:${s.dur}">${molSVG(s.size, 'var(--teal)')}</span>`
+  : `<span class="capsule" style="top:${s.top};left:${s.left};--dur:${s.dur}"></span>`).join('');
+
+const CHIP_LABELS = { All: 'All moments', Award: 'Awards', Certification: 'Certifications', Project: 'Projects', Milestone: 'Milestones', Education: 'Education' };
+document.getElementById('filters').innerHTML = CATEGORIES.map((c, i) =>
+  `<button class="chip ${i === 0 ? 'active' : ''}" data-cat="${c}">${CHIP_LABELS[c] || c}</button>`).join('');
+
+function galleryHTML(m, mi) {
+  const imgs = m.images || [];
+  if (!imgs.length) return '';
+  const cls = imgs.length === 1 ? 'g1' : imgs.length === 2 ? 'g2' : 'g3plus';
+  const shown = imgs.slice(0, 3);
+  const extra = imgs.length - shown.length;
+  return `<div class="gallery ${cls}" data-mi="${mi}">` + shown.map((im, i) => `
+    <div class="gitem" data-i="${i}">
+      <img src="${im.src}" alt="${im.alt}" loading="lazy"${im.fit ? ` class="fit-${im.fit}"` : ''} />
+      ${extra > 0 && i === shown.length - 1 ? `<div class="more-overlay">+${extra}</div>` : ''}
+    </div>`).join('') + `</div>`;
+}
+
+const CLAMP_AT = 300; // chars before "Read more" kicks in
+
+function renderFeed(filter) {
+  const list = MOMENTS.map((m, mi) => ({ m, mi }))
+    .filter(({ m }) => filter === 'All' || m.category === filter);
+  document.getElementById('feed').innerHTML =
+    `<span class="spine"></span><span class="spine-fill" id="spineFill"></span>` +
+    list.map(({ m, mi }) => `
+    <article class="moment">
+      <span class="marker"><span class="hex"></span></span>
+      <div class="when">${m.date}</div>
+      <div class="mcard">
+        ${galleryHTML(m, mi)}
+        <div class="mbody">
+          <span class="mtag">⬡ ${m.category}</span>
+          <h3 class="mtitle">${m.title}</h3>
+          <div class="morg">${m.org}</div>
+          <p class="mstory ${m.story.length > CLAMP_AT ? 'clamp' : ''}">${m.story}</p>
+          ${m.story.length > CLAMP_AT ? '<button class="readmore">Read more ↓</button>' : ''}
+          ${m.link ? `<br><a class="mlink" href="${m.link.url}" target="_blank" rel="noopener">${m.link.label} ↗</a>` : ''}
+        </div>
+      </div>
+    </article>`).join('');
+  wireFeed();
+}
+
+let io;
+function wireFeed() {
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in');
+  }), { threshold: .08 });
+  document.querySelectorAll('.moment').forEach(n => io.observe(n));
+
+  document.querySelectorAll('.readmore').forEach(b => b.addEventListener('click', () => {
+    const p = b.parentElement.querySelector('.mstory');
+    const clamped = p.classList.toggle('clamp');
+    b.textContent = clamped ? 'Read more ↓' : 'Read less ↑';
+  }));
+
+  document.querySelectorAll('.gallery').forEach(g => g.addEventListener('click', e => {
+    const item = e.target.closest('.gitem');
+    if (!item) return;
+    openLightbox(+g.dataset.mi, +item.dataset.i);
+  }));
+}
+
+/* glowing spine fills as you scroll through the feed */
+function updateSpine() {
+  const feed = document.getElementById('feed');
+  const fill = document.getElementById('spineFill');
+  if (!feed || !fill) return;
+  const rect = feed.getBoundingClientRect();
+  const focus = window.innerHeight * .55;
+  const total = rect.height - 28;
+  const progress = Math.min(Math.max(focus - rect.top - 14, 0), total);
+  fill.style.height = progress + 'px';
+}
+window.addEventListener('scroll', updateSpine, { passive: true });
+window.addEventListener('resize', updateSpine);
+
+document.getElementById('filters').addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  renderFeed(e.target.dataset.cat);
+  updateSpine();
+});
+
+/* ---- Lightbox ---- */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+const lbCount = document.getElementById('lbCount');
+let lbImgs = [], lbIdx = 0;
+
+function openLightbox(mi, i) {
+  lbImgs = MOMENTS[mi].images;
+  lbIdx = i;
+  showLb();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function showLb() {
+  const im = lbImgs[lbIdx];
+  lbImg.src = im.src;
+  lbImg.alt = im.alt;
+  lbCaption.textContent = im.alt;
+  lbCount.textContent = `${lbIdx + 1} / ${lbImgs.length}`;
+}
+function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+function stepLb(d) { lbIdx = (lbIdx + d + lbImgs.length) % lbImgs.length; showLb(); }
+
+document.getElementById('lbClose').addEventListener('click', closeLb);
+document.getElementById('lbPrev').addEventListener('click', () => stepLb(-1));
+document.getElementById('lbNext').addEventListener('click', () => stepLb(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') stepLb(-1);
+  if (e.key === 'ArrowRight') stepLb(1);
+});
+
+/* ---- Theme toggle (dark-first) ---- */
+const root = document.documentElement, btn = document.getElementById('themeBtn');
+btn.addEventListener('click', () => {
+  const dark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', dark ? 'light' : 'dark');
+  btn.textContent = dark ? '🌙 Dark' : '☀️ Light';
+});
+
+renderFeed('All');
+updateSpine();
+</script>
+</body>
+</html>
