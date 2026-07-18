@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <radialGradient id="eGlow1" cx="85%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#a32638" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#a32638" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="eGlow2" cx="0%" cy="85%" r="70%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity=".13"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="eRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c94b5e"/>
+      <stop offset="55%" stop-color="#a32638"/>
+      <stop offset="100%" stop-color="#2dd4bf"/>
+    </linearGradient>
+    <linearGradient id="eLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c94b5e" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#c94b5e"/>
+      <stop offset="100%" stop-color="#c94b5e" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="eHex" width="56" height="97" patternUnits="userSpaceOnUse">
+      <path d="M28 1 54 16v32L28 63 2 48V16z M28 63v33" fill="none" stroke="#2dd4bf" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="#06100e"/>
+  <rect width="1600" height="900" fill="#0a1a17" opacity=".55"/>
+  <rect width="1600" height="900" fill="url(#eGlow1)"/>
+  <rect width="1600" height="900" fill="url(#eGlow2)"/>
+  <rect width="1600" height="900" fill="url(#eHex)"/>
+
+  <!-- decorative molecules -->
+  <g stroke="#c94b5e" stroke-width="3" fill="none" opacity=".25">
+    <polygon points="1390,640 1450,675 1450,745 1390,780 1330,745 1330,675"/>
+    <circle cx="1390" cy="640" r="9" fill="#c94b5e" stroke="none"/>
+  </g>
+  <g stroke="#2dd4bf" stroke-width="2.5" fill="none" opacity=".22">
+    <polygon points="205,150 253,178 253,234 205,262 157,234 157,178"/>
+    <circle cx="253" cy="234" r="7" fill="#2dd4bf" stroke="none"/>
+  </g>
+
+  <!-- graduation-cap emblem in ring -->
+  <circle cx="800" cy="270" r="104" fill="none" stroke="url(#eRing)" stroke-width="7"/>
+  <circle cx="800" cy="270" r="88" fill="#0e211d"/>
+  <g>
+    <!-- mortarboard -->
+    <polygon points="800,215 905,258 800,301 695,258" fill="#e9f5f1"/>
+    <path d="M745 285 v32 q0 22 55 22 q55 0 55 -22 v-32 l-55 22 z" fill="#c9d8d3"/>
+    <!-- tassel -->
+    <line x1="905" y1="258" x2="905" y2="322" stroke="#c94b5e" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="905" cy="332" r="9" fill="#c94b5e"/>
+  </g>
+
+  <!-- eyebrow -->
+  <text x="800" y="448" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="10" fill="#c94b5e">WHERE THE QUALITY JOURNEY BEGAN</text>
+
+  <!-- headline -->
+  <text x="800" y="534" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="62" font-weight="700" fill="#e9f5f1">Master's · Pharmaceutical</text>
+  <text x="800" y="608" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="62" font-weight="700" fill="#e9f5f1">Manufacturing</text>
+
+  <!-- org + years -->
+  <text x="800" y="668" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#8fa8a1">Stevens Institute of Technology · Hoboken, NJ · 2008 – 2009</text>
+
+  <!-- accent line -->
+  <path d="M440 756 H700 L718 756 L730 734 L744 778 L756 756 H844 L860 756 L872 728 L888 784 L902 756 H1160"
+        fill="none" stroke="url(#eLine)" stroke-width="4" stroke-linecap="round"/>
+</svg>

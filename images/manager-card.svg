@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <radialGradient id="bgGlow1" cx="85%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity=".16"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgGlow2" cx="0%" cy="80%" r="70%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity=".14"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6ee7b7"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="hex" width="56" height="97" patternUnits="userSpaceOnUse">
+      <path d="M28 1 54 16v32L28 63 2 48V16z M28 63v33" fill="none" stroke="#2dd4bf" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="#06100e"/>
+  <rect width="1600" height="900" fill="#0a1a17" opacity=".55"/>
+  <rect width="1600" height="900" fill="url(#bgGlow1)"/>
+  <rect width="1600" height="900" fill="url(#bgGlow2)"/>
+  <rect width="1600" height="900" fill="url(#hex)"/>
+
+  <!-- decorative molecules -->
+  <g stroke="#2dd4bf" stroke-width="3" fill="none" opacity=".28">
+    <polygon points="1385,120 1445,155 1445,225 1385,260 1325,225 1325,155"/>
+    <circle cx="1385" cy="120" r="9" fill="#2dd4bf" stroke="none"/>
+    <circle cx="1445" cy="225" r="9" fill="#2dd4bf" stroke="none" opacity=".7"/>
+  </g>
+  <g stroke="#38bdf8" stroke-width="2.5" fill="none" opacity=".2">
+    <polygon points="200,690 248,718 248,774 200,802 152,774 152,718"/>
+    <circle cx="200" cy="690" r="7" fill="#38bdf8" stroke="none"/>
+  </g>
+
+  <!-- monogram ring -->
+  <circle cx="800" cy="285" r="104" fill="none" stroke="url(#ringGrad)" stroke-width="7"/>
+  <circle cx="800" cy="285" r="88" fill="#0e211d"/>
+  <text x="800" y="318" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="84" font-weight="700" fill="#2dd4bf">DP</text>
+
+  <!-- eyebrow -->
+  <text x="800" y="455" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="10" fill="#2dd4bf">STEPPING INTO LEADERSHIP</text>
+
+  <!-- headline -->
+  <text x="800" y="540" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#e9f5f1">Manager, Quality Assurance</text>
+  <text x="800" y="614" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#e9f5f1">&amp; Compliance</text>
+
+  <!-- org -->
+  <text x="800" y="672" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#8fa8a1">Lupin Pharmaceuticals · Somerset, NJ · 2023</text>
+
+  <!-- ECG heartbeat line -->
+  <path d="M440 760 H700 L718 760 L730 738 L744 782 L756 760 H844 L860 760 L872 732 L888 788 L902 760 H1160"
+        fill="none" stroke="url(#lineGrad)" stroke-width="4" stroke-linecap="round"/>
+</svg>

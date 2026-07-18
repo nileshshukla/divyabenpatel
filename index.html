@@ -120,7 +120,9 @@
     animation: spinRing 9s linear infinite; }
   .avatar-ring .avatar { width: 100%; height: 100%; border-radius: 50%; background: var(--surface-solid);
     display: flex; align-items: center; justify-content: center; font-family: var(--display);
-    font-size: 40px; font-weight: 700; color: var(--teal); animation: spinRing 9s linear infinite reverse; }
+    font-size: 40px; font-weight: 700; color: var(--teal); animation: spinRing 9s linear infinite reverse;
+    overflow: hidden; }
+  .avatar-ring .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
   @keyframes spinRing { to { transform: rotate(360deg); } }
   .eyebrow { color: var(--teal); font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 12px;
     opacity: 0; animation: riseIn .8s var(--ease) .1s forwards; }
@@ -357,6 +359,8 @@ if (typeof PROFILE === 'undefined' || typeof CATEGORIES === 'undefined' || typeo
   throw new Error('content.js did not load or has a syntax error near the last edit');
 
 
+if (PROFILE.photo) document.querySelector('.avatar-ring .avatar').innerHTML =
+  `<img src="${PROFILE.photo}" alt="${PROFILE.name}" />`;
 document.getElementById('pName').textContent = PROFILE.name;
 document.getElementById('pRole').textContent = PROFILE.role;
 document.getElementById('pLede').textContent = PROFILE.lede;
