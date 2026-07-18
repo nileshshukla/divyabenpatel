@@ -59,7 +59,7 @@
   <text x="800" y="608" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="62" font-weight="700" fill="#e9f5f1">Manufacturing</text>
 
   <!-- org + years -->
-  <text x="800" y="668" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#8fa8a1">Stevens Institute of Technology · Hoboken, NJ · 2008 – 2009</text>
+  <text x="800" y="668" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#8fa8a1">Stevens Institute of Technology · Hoboken, NJ · 2008 - 2009</text>
 
   <!-- accent line -->
   <path d="M440 756 H700 L718 756 L730 734 L744 778 L756 756 H844 L860 756 L872 728 L888 784 L902 756 H1160"
