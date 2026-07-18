@@ -46,6 +46,28 @@ In a regulated environment, adoption doesn't happen at rollout — it happens wh
     link: null
   },
   {
+    date: "May 2026",
+    category: "Milestone",
+    title: "Jersey City Half Marathon — Finisher",
+    org: "Jersey City, NJ · 13.1 miles · Bib 9979",
+    story: `Completed the Jersey City Half Marathon — a goal that challenged me physically, mentally, and emotionally.
+
+Training for this race reminded me that success, whether in fitness or career growth, is built on consistency, discipline, and showing up even on the hard days.
+
+Whether in running or in our careers, progress rarely happens when things feel easy. It happens through discipline, patience, setbacks, and the decision to keep going.
+
+This race was a personal milestone, but also a reminder that endurance, resilience, and consistency are some of the strongest leadership skills we can build.
+
+Proud to cross this finish line and even more grateful for the lessons learned along the way.`,
+    images: [
+      { src: "images/jc-half-1.jpg", alt: "Divya at the Jersey City Half Marathon finish line" },
+      { src: "images/jc-half-2.jpg", alt: "2026 Jersey City Half Marathon finisher medal" },
+      { src: "images/jc-half-3.jpg", alt: "Race bib 9979 — Divyaben, Jersey City Half Marathon" },
+      { src: "images/jc-half-4.jpg", alt: "Race tracker on course at mile 11 of 13.1" }
+    ],
+    link: null
+  },
+  {
     date: "December 2025",
     category: "Award",
     title: "Catalyst Team of the Year",
