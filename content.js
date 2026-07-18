@@ -16,6 +16,7 @@
 
 const PROFILE = {
   name: "Divya Patel",
+  photo: "images/divya.jpg",
   role: "Manager — Quality Assurance & Compliance · Lupin Pharmaceuticals",
   lede: "A career in pharmaceutical quality — the audits, awards, certifications, and milestones that tell the story.",
   badges: ["MS", "ASQ-CQA", "Six Sigma Green Belt", "ASQ Member"]
@@ -79,27 +80,65 @@ Grateful for my family's support and proud to bring this value back into my prof
     images: [
       { src: "images/cqa-1.jpg", alt: "ASQ Certified Quality Auditor verified certificate", fit: "contain" }
     ],
-    link: { label: "Verified credential", url: "https://lnkd.in/e7a_EUxs" }
+    link: { label: "Verified credential", url: "https://credentials.asq.org/277b0846-b74b-49a6-86e0-6811289af4a3#acc.jJg52CP0" }
   },
   {
-    date: "Placeholder — year",
-    category: "Milestone",
-    title: "Manager, Quality Assurance & Compliance",
+    date: "June 2025",
+    category: "Award",
+    title: "Top Participant & Presenter — Leadership Development Program",
     org: "Lupin Pharmaceuticals · Somerset, NJ",
-    story: "Placeholder — the story of stepping into leadership at Lupin: the team, the scope, and what this milestone means. Replace with Divya's own words.",
+    story: `Reflecting on a proud moment in my leadership journey.
+
+In late 2024, I had the privilege of being selected for an 8-week Essential Managerial and Supervisory Skills Development training program, alongside 24 professionals from cross-functional teams. The program sharpened critical leadership skills: conflict resolution, team collaboration and communication, navigating crucial conversations, and managerial role clarity.
+
+After completing the program, participants were invited to present their key learnings and leadership insights. I was among the 8 who presented — and was deeply honored to be recognized by our Site Head and President as the "Top Participant and Presenter" at our townhall meeting.
+
+A big thank-you to Helen Fazio, who led the program with depth and clarity, to our HR team, and to Quality Head Suneel Chhatre for their continuous support and encouragement.
+
+This experience reinforced the power of investing in continuous learning, stepping up to lead, and sharing perspectives with others.`,
     images: [
-      { src: "images/ph-6.svg", alt: "Placeholder — replace with a real photo" }
+      { src: "images/leadership-1.jpg", alt: "Divya recognized among the top three participants of the leadership program" },
+      { src: "images/leadership-2.jpg", alt: "Receiving the award trophy at the townhall celebration" },
+      { src: "images/leadership-3.jpg", alt: "A thank-you gift at the leadership program award ceremony" }
     ],
     link: null
   },
   {
-    date: "Placeholder — year",
+    date: "October 2023",
     category: "Certification",
     title: "Six Sigma Green Belt (SSGB)",
-    org: "Placeholder — certifying body",
-    story: "Placeholder — the Green Belt journey: the training, the project that earned it, and how she uses it every day in pharmaceutical quality.",
+    org: "Lupin DISHA · Operational Excellence",
+    story: `Earned the Six Sigma Green Belt certification through Lupin's DISHA Operational Excellence program — an online training module, a written examination, four days of classroom training, and two completed improvement projects.
+
+The certification recognizes the leadership qualities, technical skills, and application required for the Six Sigma methodology — a toolkit I use every day to drive measurable, repeatable improvements in pharmaceutical quality.`,
     images: [
-      { src: "images/ph-5.svg", alt: "Placeholder — replace with a real photo" }
+      { src: "images/ssgb-cert.jpg", alt: "Six Sigma Green Belt Certificate of Achievement — Lupin DISHA", fit: "contain" }
+    ],
+    link: null
+  },
+  {
+    date: "2023",
+    category: "Milestone",
+    title: "Manager, Quality Assurance & Compliance",
+    org: "Lupin Pharmaceuticals · Somerset, NJ",
+    story: `Stepped into leadership as Manager, Quality Assurance & Compliance at Lupin's Somerset site — growing from individual contributor to people leader in pharmaceutical quality.
+
+Leading audit and compliance activities means owning the details and empowering the team: building confidence, sharing knowledge, and creating a culture where quality is everyone's job.`,
+    images: [
+      { src: "images/manager-card.svg", alt: "Manager, Quality Assurance & Compliance — Lupin Pharmaceuticals, Somerset NJ" }
+    ],
+    link: null
+  },
+  {
+    date: "2022",
+    category: "Milestone",
+    title: "Milestone Celebration with Lupin CEO Vinita Gupta",
+    org: "Lupin Pharmaceuticals · Somerset, NJ",
+    story: `A milestone celebration with Lupin CEO Ms. Vinita Gupta — a woman to look up to and a truly inspiring person.
+
+Moments like these are a reminder of what makes the journey special: leadership that shows up, celebrates the team, and inspires what comes next.`,
+    images: [
+      { src: "images/ceo-1.jpg", alt: "Divya with Lupin CEO Vinita Gupta and the Somerset team" }
     ],
     link: null
   },
