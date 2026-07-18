@@ -18,4 +18,5 @@ and the site updates itself in about a minute. Photos go in the
 | `index.html` | The site's layout and code (leave as is) |
 | `images/` | Photos used by the timeline |
 | `v2/` | New "batch record" redesign (same content, clean-room light design) at [/v2/](https://nileshshukla.github.io/divyabenpatel/v2/) |
+| `v3/` | "Retention Time" redesign (career as a chromatogram) at [/v3/](https://nileshshukla.github.io/divyabenpatel/v3/) |
 | `previews.html`, `concept-*.html` | Early design prototypes, kept for reference |
