@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Divya Patel · Quality Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     V2: "THE BATCH RECORD"
+     Clean-room light. Every career moment is a record entry that
+     receives its QA release stamp as it scrolls into view.
+     Content comes from ../content.js (shared with v1).
+     ============================================================ */
+
+  :root {
+    --paper: #F6F8F7;
+    --card: #FFFFFF;
+    --ink: #0C1B33;
+    --ink-soft: #5A6B80;
+    --line: #D8E0E6;
+    --cobalt: #1D4ED8;
+    --cobalt-soft: #E4EBFC;
+    --release: #0E9F6E;
+    --display: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+    --body: 'Instrument Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --ease: cubic-bezier(.22, 1, .36, 1);
+    --maxw: 1120px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--paper); color: var(--ink);
+    line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  a { color: var(--cobalt); }
+  :focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; }
+
+  /* faint metric grid, like graph paper in a lab notebook */
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 72px 72px; opacity: .28; }
+
+  /* ================= topbar ================= */
+  .topbar { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  .brand { font-family: var(--mono); font-size: 12.5px; font-weight: 600; letter-spacing: 2.5px; padding: 12px 0;
+    text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--release); }
+  .topnav { display: flex; gap: 6px; }
+  .topnav a { font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--ink-soft); text-decoration: none; padding: 8px 12px; border-radius: 4px; transition: color .2s, background .2s; }
+  .topnav a:hover { color: var(--cobalt); background: var(--cobalt-soft); }
+  .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--cobalt); }
+
+  /* ================= hero ================= */
+  .hero { padding: 72px 0 0; }
+  .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; font-weight: 500; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--cobalt); display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: rise .7s var(--ease) .05s forwards; }
+  .eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--cobalt); }
+  h1 { font-family: var(--display); font-weight: 800; font-size: clamp(58px, 10.5vw, 138px);
+    line-height: .95; letter-spacing: -.02em; margin: 18px 0 22px; text-wrap: balance; }
+  h1 .line { display: block; overflow: hidden; }
+  h1 .line > span { display: inline-block; transform: translateY(110%); animation: riseUp .8s var(--ease) forwards; }
+  h1 .line:nth-child(2) > span { animation-delay: .12s; color: var(--cobalt); }
+  .role { font-size: clamp(16px, 2vw, 19px); font-weight: 500; color: var(--ink);
+    opacity: 0; animation: rise .7s var(--ease) .35s forwards; }
+  .lede { color: var(--ink-soft); max-width: 560px; margin-top: 10px; font-size: 16.5px;
+    opacity: 0; animation: rise .7s var(--ease) .45s forwards; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px;
+    opacity: 0; animation: rise .7s var(--ease) .55s forwards; }
+  .badge { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 1px;
+    padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--card);
+    text-transform: uppercase; }
+
+  /* specimen photo with crop marks */
+  .specimen { position: relative; padding: 26px; opacity: 0; animation: rise .7s var(--ease) .3s forwards; }
+  .specimen img { display: block; width: clamp(160px, 18vw, 230px); height: clamp(160px, 18vw, 230px);
+    object-fit: cover; border-radius: 50%; border: 1px solid var(--line); }
+  .specimen .initials { display: flex; align-items: center; justify-content: center;
+    width: clamp(160px, 18vw, 230px); height: clamp(160px, 18vw, 230px); border-radius: 50%;
+    border: 1px solid var(--line); background: var(--card); font-family: var(--display);
+    font-size: 64px; font-weight: 800; color: var(--cobalt); }
+  .specimen .mark { position: absolute; width: 18px; height: 18px; border-color: var(--ink); border-style: solid; border-width: 0; }
+  .specimen .mark.tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+  .specimen .mark.tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
+  .specimen .mark.bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
+  .specimen .mark.br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+  .specimen figcaption { font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.5px;
+    color: var(--ink-soft); text-align: center; margin-top: 12px; text-transform: uppercase; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes riseUp { to { transform: translateY(0); } }
+
+  /* ================= marquee ================= */
+  .marquee { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-top: 56px; padding: 13px 0; overflow: hidden; background: var(--card); contain: paint; }
+  .marquee-track { display: inline-flex; gap: 56px; white-space: nowrap; will-change: transform;
+    animation: drift 36s linear infinite; }
+  .marquee span { font-family: var(--mono); font-size: 12px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--ink-soft); }
+  .marquee b { color: var(--cobalt); font-weight: 500; }
+  @keyframes drift { to { transform: translateX(-50%); } }
+
+  /* ================= record ================= */
+  .record { padding: 64px 0 90px; }
+  .record-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 26px; }
+  .record-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.6vw, 38px); letter-spacing: -.01em; }
+  .record-head .count { font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; color: var(--ink-soft); text-transform: uppercase; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+  .chip { cursor: pointer; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 1.2px;
+    text-transform: uppercase; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink-soft); transition: all .22s var(--ease); }
+  .chip:hover { border-color: var(--cobalt); color: var(--cobalt); }
+  .chip.active { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
+
+  .entry { display: grid; grid-template-columns: 118px 1fr; gap: 30px; padding-bottom: 54px; }
+  .yr { align-self: start; position: sticky; top: 86px; }
+  .yr .y { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; color: var(--ink); }
+  .yr .d { font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.2px; color: var(--ink-soft);
+    text-transform: uppercase; margin-top: 6px; }
+
+  .rec-card { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; transition: opacity .6s var(--ease), transform .6s var(--ease), box-shadow .3s var(--ease); }
+  .js-reveal .entry:not(.in) .rec-card { opacity: 0; transform: translateY(26px); }
+  .rec-card:hover { box-shadow: 0 14px 40px rgba(12, 27, 51, .1); }
+
+  .rec-top { display: flex; align-items: center; gap: 14px; padding: 16px 22px 0; }
+  .lot { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--cobalt); white-space: nowrap; }
+  .rec-top .rule { flex: 1; height: 1px; background: var(--line); }
+  .rec-body { padding: 12px 22px 22px; }
+  .rec-title { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 2.8vw, 30px);
+    line-height: 1.15; letter-spacing: -.01em; padding-right: 86px; }
+  .rec-org { color: var(--ink-soft); font-size: 14px; margin: 6px 0 14px; }
+  .rec-story { font-size: 15.5px; color: color-mix(in srgb, var(--ink) 90%, transparent); white-space: pre-line; }
+  .rec-story.clamp { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .expand { margin-top: 4px; background: none; border: none; cursor: pointer; font-family: var(--mono);
+    font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--cobalt); padding: 9px 0; }
+  .expand:hover { text-decoration: underline; }
+  .rec-link { display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 1.2px; text-transform: uppercase; color: var(--release); text-decoration: none;
+    margin-top: 10px; padding: 6px 0; }
+  .rec-link:hover { text-decoration: underline; }
+
+  /* photo sheet */
+  .sheet { display: grid; gap: 4px; padding: 0 22px 22px; cursor: pointer; }
+  .sheet .cell { position: relative; overflow: hidden; border-radius: 6px; background: var(--paper);
+    border: 1px solid var(--line); min-height: 0; }
+  .sheet img { width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .5s var(--ease); }
+  .sheet .cell:hover img { transform: scale(1.045); }
+  .sheet img.fit-contain { object-fit: contain; }
+  .sheet.s1 { grid-template-columns: 1fr; }
+  .sheet.s1 .cell { aspect-ratio: 16/9; }
+  .sheet.s1 .cell:has(.fit-contain) { aspect-ratio: 4/3; }
+  .sheet.s2 { grid-template-columns: 1fr 1fr; }
+  .sheet.s2 .cell { aspect-ratio: 4/3; }
+  .sheet.s3plus { grid-template-columns: 2fr 1fr; grid-template-rows: minmax(0,1fr) minmax(0,1fr); aspect-ratio: 16/10; }
+  .sheet.s3plus .cell:first-child { grid-row: span 2; }
+  .more { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(246, 248, 247, .72); backdrop-filter: blur(2px);
+    font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--ink); }
+
+  /* ================= the RELEASED stamp (signature) ================= */
+  .stamp { position: absolute; top: 14px; right: 16px; width: 92px; height: 92px; color: var(--release);
+    transform: scale(2.4) rotate(-26deg); opacity: 0; pointer-events: none;
+    mix-blend-mode: multiply; z-index: 2; }
+  .entry.in .stamp, html:not(.js-reveal) .stamp { animation: stampIn .55s var(--ease) .45s forwards; }
+  @keyframes stampIn {
+    0%   { transform: scale(2.4) rotate(-26deg); opacity: 0; }
+    55%  { transform: scale(.92) rotate(-9deg);  opacity: .95; }
+    75%  { transform: scale(1.06) rotate(-14deg); opacity: .88; }
+    100% { transform: scale(1) rotate(-12deg);   opacity: .92; }
+  }
+
+  /* ================= footer ================= */
+  footer { border-top: 1px solid var(--line); background: var(--card); padding: 56px 0 64px; }
+  footer .wrap { display: grid; gap: 8px; }
+  .approve { font-family: var(--mono); font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-soft); }
+  .sig { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4.5vw, 44px); letter-spacing: -.01em; }
+  .foot-links { display: flex; gap: 20px; margin-top: 10px; }
+  .foot-links a { font-family: var(--mono); font-size: 12.5px; letter-spacing: 1.2px; text-transform: uppercase;
+    text-decoration: none; padding: 6px 0; }
+  .foot-links a:hover { text-decoration: underline; }
+  .foot-note { color: var(--ink-soft); font-size: 12.5px; margin-top: 16px; }
+
+  /* ================= lightbox ================= */
+  .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(246, 248, 247, .96);
+    display: none; align-items: center; justify-content: center; flex-direction: column; padding: 22px; }
+  .lightbox.open { display: flex; animation: lbIn .25s var(--ease); }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox img { max-width: min(92vw, 1080px); max-height: 74vh; border-radius: 8px;
+    border: 1px solid var(--line); background: #fff; box-shadow: 0 30px 70px rgba(12, 27, 51, .18); }
+  .lb-caption { color: var(--ink); font-size: 14px; margin-top: 16px; text-align: center; max-width: 640px; }
+  .lb-count { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; color: var(--ink-soft); margin-top: 4px; }
+  .lb-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px;
+    border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .2s; }
+  .lb-btn:hover { border-color: var(--cobalt); color: var(--cobalt); }
+  .lb-prev { left: 20px; } .lb-next { right: 20px; }
+  .lb-close { position: absolute; top: 14px; right: 20px; background: none; border: none;
+    font-size: 34px; color: var(--ink); cursor: pointer; line-height: 1; }
+
+  /* ================= responsive ================= */
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .specimen { order: -1; padding: 22px; justify-self: start; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px; }
+    .brand { letter-spacing: 1.5px; }
+    .topnav a { padding: 8px 8px; font-size: 11px; letter-spacing: 1px; white-space: nowrap; }
+  }
+  @media (max-width: 480px) {
+    .brand-x { display: none; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding-top: 44px; }
+    .entry { grid-template-columns: 1fr; gap: 10px; padding-bottom: 40px; }
+    .yr { position: static; }
+    .yr .y { font-size: 24px; }
+    .rec-title { padding-right: 64px; }
+    .stamp { width: 68px; height: 68px; top: 10px; right: 10px; }
+    .sheet.s3plus { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; aspect-ratio: auto; }
+    .sheet.s3plus .cell:first-child { grid-column: span 2; grid-row: auto; aspect-ratio: 16/10; }
+    .sheet.s3plus .cell { aspect-ratio: 4/3; }
+    .sheet.s3plus .cell:first-child:has(.fit-contain) { aspect-ratio: 5/4; }
+    .lb-btn { width: 40px; height: 40px; font-size: 18px; }
+    .lb-prev { left: 8px; } .lb-next { right: 8px; }
+    .lightbox { padding: 12px; }
+    .lightbox img { max-width: calc(100vw - 24px); }
+    .marquee { margin-top: 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01s !important; animation-delay: 0s !important; transition-duration: .01s !important; }
+    .marquee-track { animation: none; }
+    h1 .line > span { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- shared defs for the stamp: arc path + ink roughening -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="stampArc" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/>
+    <filter id="inkRough"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/></filter>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>DP<span class="brand-x"> · Quality Record</span></a>
+    <nav class="topnav">
+      <a href="#record">The record</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Batch record · A career in pharmaceutical quality</div>
+        <h1 id="heroName" aria-label="Divya Patel">
+          <span class="line"><span>Divya</span></span>
+          <span class="line"><span>Patel</span></span>
+        </h1>
+        <div class="role" id="pRole"></div>
+        <p class="lede" id="pLede"></p>
+        <div class="badges" id="pBadges"></div>
+      </div>
+      <figure class="specimen" id="specimen">
+        <span class="mark tl"></span><span class="mark tr"></span><span class="mark bl"></span><span class="mark br"></span>
+        <div id="specimenImg"></div>
+        <figcaption>Analyst on record · Somerset, NJ</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+  <section class="record" id="record">
+    <div class="wrap">
+      <div class="record-head">
+        <h2>Every entry reviewed. Every entry released.</h2>
+        <span class="count" id="recCount"></span>
+      </div>
+      <div class="filters" id="filters"></div>
+      <div id="feed"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="approve">This record is reviewed and approved by</span>
+    <span class="sig" id="pName"></span>
+    <div class="foot-links">
+      <a href="https://www.linkedin.com/in/divya-patel-ms-asq-cqa-ssgb-57b9aa27/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="../index.html">Classic site</a>
+    </div>
+    <p class="foot-note">© 2026 Divya Patel · Quality Record, second edition</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">‹</button>
+  <img id="lbImg" alt="" />
+  <div class="lb-caption" id="lbCaption"></div>
+  <div class="lb-count" id="lbCount"></div>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">›</button>
+</div>
+
+<script src="../content.js"></script>
+<script>
+function showContentError(err) {
+  console.error(err);
+  const d = document.createElement('div');
+  d.style.cssText = 'max-width:620px;margin:80px auto;padding:26px 28px;background:#fff;border:1px solid #D8E0E6;border-radius:10px;font-family:system-ui,sans-serif;color:#0C1B33;line-height:1.6;';
+  d.innerHTML = '<h2 style="margin:0 0 8px;font-size:20px;">The content file has a typo</h2>'
+    + '<p>The site itself is fine. The last edit to <b>content.js</b> probably has a missing quote, comma, or backtick.</p>'
+    + '<p style="margin-top:8px;">Open <b>content.js</b> on GitHub and correct the last change, or use History to restore the previous version. See <b>EDITING.md</b>.</p>'
+    + '<p style="margin-top:10px;color:#5A6B80;font-size:13px;">Detail: ' + (err && err.message ? String(err.message) : 'unknown') + '</p>';
+  document.body.appendChild(d);
+}
+try {
+if (typeof PROFILE === 'undefined' || typeof CATEGORIES === 'undefined' || typeof MOMENTS === 'undefined')
+  throw new Error('content.js did not load or has a syntax error near the last edit');
+
+const IMG = src => '../' + src;   // content.js paths are relative to the repo root
+if (!location.search.includes('static')) document.documentElement.classList.add('js-reveal');
+
+/* hero */
+document.getElementById('pName').textContent = PROFILE.name;
+document.getElementById('pRole').textContent = PROFILE.role;
+document.getElementById('pLede').textContent = PROFILE.lede;
+document.getElementById('pBadges').innerHTML = PROFILE.badges.map(b => `<span class="badge">${b}</span>`).join('');
+document.getElementById('specimenImg').innerHTML = PROFILE.photo
+  ? `<img src="${IMG(PROFILE.photo)}" alt="${PROFILE.name}" />`
+  : `<div class="initials">DP</div>`;
+const names = PROFILE.name.split(' ');
+document.getElementById('heroName').innerHTML =
+  `<span class="line"><span>${names[0] || ''}</span></span><span class="line"><span>${names.slice(1).join(' ')}</span></span>`;
+document.getElementById('heroName').setAttribute('aria-label', PROFILE.name);
+
+/* marquee: credentials + pharma vernacular, twice for a seamless loop */
+const strip = `<b>GMP</b> Quality Assurance ⬡ Audit & Compliance ⬡ <b>ASQ-CQA</b> Certified Quality Auditor ⬡ Six Sigma Green Belt ⬡ Veeva Vault ⬡ Data Integrity ⬡ Batch Release ⬡ <b>Lupin Pharmaceuticals</b> ⬡ `;
+document.getElementById('marqueeTrack').innerHTML = `<span>${strip}</span><span>${strip}</span>`;
+
+/* filters */
+const CHIP_LABELS = { All: 'Full record', Award: 'Awards', Certification: 'Certifications', Project: 'Projects', Milestone: 'Milestones', Education: 'Education' };
+document.getElementById('filters').innerHTML = CATEGORIES.map((c, i) =>
+  `<button class="chip ${i === 0 ? 'active' : ''}" data-cat="${c}">${CHIP_LABELS[c] || c}</button>`).join('');
+
+/* record entries */
+const CLAMP_AT = 300;
+const yearOf = d => { const m = String(d || '').match(/\d{4}/); return m ? m[0] : String(d || ''); };
+
+function sheetHTML(m, mi) {
+  const imgs = m.images || [];
+  if (!imgs.length) return '';
+  const cls = imgs.length === 1 ? 's1' : imgs.length === 2 ? 's2' : 's3plus';
+  const shown = imgs.slice(0, 3);
+  const extra = imgs.length - shown.length;
+  return `<div class="sheet ${cls}" data-mi="${mi}">` + shown.map((im, i) => `
+    <div class="cell" data-i="${i}">
+      <img src="${IMG(im.src)}" alt="${im.alt}" loading="lazy"${im.fit ? ` class="fit-${im.fit}"` : ''} />
+      ${extra > 0 && i === shown.length - 1 ? `<div class="more">+${extra}</div>` : ''}
+    </div>`).join('') + `</div>`;
+}
+
+const stampSVG = `
+  <svg class="stamp" viewBox="0 0 120 120" aria-hidden="true"><g filter="url(#inkRough)">
+    <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="3"/>
+    <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <text font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" letter-spacing="3.4" fill="currentColor">
+      <textPath href="#stampArc">RELEASED · QUALITY ASSURANCE · RELEASED ·</textPath>
+    </text>
+    <text x="60" y="57" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" font-weight="600" fill="currentColor">QA ✓</text>
+    <text x="60" y="73" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="currentColor">D. PATEL</text>
+  </g></svg>`;
+
+function renderFeed(filter) {
+  const list = MOMENTS.map((m, mi) => ({ m, mi }))
+    .filter(({ m }) => filter === 'All' || m.category === filter);
+  document.getElementById('recCount').textContent = `${list.length} ${list.length === 1 ? 'entry' : 'entries'} on file`;
+  document.getElementById('feed').innerHTML = list.map(({ m, mi }) => {
+    const story = m.story || '';
+    return `
+    <article class="entry">
+      <div class="yr"><div class="y">${yearOf(m.date)}</div></div>
+      <div class="rec-card">
+        ${stampSVG}
+        <div class="rec-top"><span class="lot">${m.date || ''} · ${m.category || 'Entry'}</span><span class="rule"></span></div>
+        <div class="rec-body">
+          <h3 class="rec-title">${m.title || 'Untitled entry'}</h3>
+          <div class="rec-org">${m.org || ''}</div>
+          <p class="rec-story ${story.length > CLAMP_AT ? 'clamp' : ''}">${story}</p>
+          ${story.length > CLAMP_AT ? '<button class="expand">View full entry ↓</button>' : ''}
+          ${m.link ? `<br><a class="rec-link" href="${m.link.url}" target="_blank" rel="noopener">${m.link.label} ↗</a>` : ''}
+        </div>
+        ${sheetHTML(m, mi)}
+      </div>
+    </article>`;
+  }).join('');
+  wireFeed();
+}
+
+let io;
+function wireFeed() {
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in');
+  }), { threshold: .12 });
+  document.querySelectorAll('.entry').forEach(n => io.observe(n));
+
+  document.querySelectorAll('.expand').forEach(b => b.addEventListener('click', () => {
+    const p = b.parentElement.querySelector('.rec-story');
+    const clamped = p.classList.toggle('clamp');
+    b.textContent = clamped ? 'View full entry ↓' : 'Collapse entry ↑';
+  }));
+
+  document.querySelectorAll('.sheet').forEach(g => g.addEventListener('click', e => {
+    const cell = e.target.closest('.cell');
+    if (!cell) return;
+    openLightbox(+g.dataset.mi, +cell.dataset.i);
+  }));
+}
+
+/* filters */
+document.getElementById('filters').addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  renderFeed(e.target.dataset.cat);
+});
+
+/* lightbox */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+let lbImgs = [], lbIdx = 0;
+function openLightbox(mi, i) {
+  lbImgs = MOMENTS[mi].images || [];
+  lbIdx = i;
+  showLb();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function showLb() {
+  const im = lbImgs[lbIdx];
+  lbImg.src = IMG(im.src);
+  lbImg.alt = im.alt;
+  document.getElementById('lbCaption').textContent = im.alt;
+  document.getElementById('lbCount').textContent = `${lbIdx + 1} / ${lbImgs.length}`;
+}
+function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+function stepLb(d) { lbIdx = (lbIdx + d + lbImgs.length) % lbImgs.length; showLb(); }
+document.getElementById('lbClose').addEventListener('click', closeLb);
+document.getElementById('lbPrev').addEventListener('click', () => stepLb(-1));
+document.getElementById('lbNext').addEventListener('click', () => stepLb(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') stepLb(-1);
+  if (e.key === 'ArrowRight') stepLb(1);
+});
+
+/* review progress along the record */
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+}, { passive: true });
+
+renderFeed('All');
+} catch (err) { showContentError(err); }
+</script>
+</body>
+</html>
