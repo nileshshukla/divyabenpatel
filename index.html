@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Divya Patel — Quality & Compliance · Achievement Timeline</title>
+<title>Divya Patel - Quality & Compliance · Achievement Timeline</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     CONCEPT 3 v2 — "Achievement Moments" · pharma-modern edition
+     CONCEPT 3 v2 - "Achievement Moments" · pharma-modern edition
      Dark-first, glassmorphism, animated molecules, glowing
      scroll-fill timeline. Narrative feed of career moments.
      ============================================================ */
@@ -68,7 +68,7 @@
       radial-gradient(800px 700px at -10% 40%, color-mix(in srgb, var(--teal) 12%, transparent), transparent 60%),
       var(--bg);
   }
-  /* hex-grid — molecular lattice */
+  /* hex-grid - molecular lattice */
   .backdrop::after { content: ""; position: absolute; inset: 0; opacity: .35;
     background-image: url("data:image/svg+xml,%3Csvg width='56' height='97' viewBox='0 0 56 97' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 1 54 16v32L28 63 2 48V16z M28 63v33 M54 48l24 15 M2 48l-24 15' fill='none' stroke='%232dd4bf' stroke-opacity='.09' stroke-width='1'/%3E%3C/svg%3E");
     mask-image: radial-gradient(ellipse 90% 70% at 50% 10%, #000 20%, transparent 80%);
@@ -143,7 +143,7 @@
     opacity: 0; animation: riseIn .8s var(--ease) .65s forwards; }
   @keyframes riseIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 
-  /* ECG divider — quality heartbeat */
+  /* ECG divider - quality heartbeat */
   .ecg { display: block; width: min(560px, 86%); margin: 44px auto 0; overflow: visible;
     opacity: 0; animation: riseIn .8s var(--ease) .8s forwards; }
   .ecg path { fill: none; stroke: var(--teal); stroke-width: 2; stroke-linecap: round;
@@ -304,7 +304,7 @@
     <div class="role" id="pRole"></div>
     <div class="badges" id="pBadges"></div>
     <p class="lede" id="pLede"></p>
-    <!-- ECG pulse — the heartbeat of quality -->
+    <!-- ECG pulse - the heartbeat of quality -->
     <svg class="ecg" viewBox="0 0 560 60" aria-hidden="true">
       <path d="M0 30 H160 L180 30 L192 12 L206 48 L218 30 H300 L316 30 L328 6 L344 54 L358 30 H560" />
     </svg>
@@ -339,7 +339,7 @@
 <script src="content.js"></script>
 <script>
 /* ============================================================
-   All editable text lives in content.js — edit THAT file, not
+   All editable text lives in content.js. Edit THAT file, not
    this one. This file is only layout and rendering code.
    ============================================================ */
 
@@ -348,9 +348,9 @@ function showContentError(err) {
   console.error(err);
   const d = document.createElement('div');
   d.style.cssText = 'max-width:620px;margin:100px auto;padding:28px 30px;background:#0e211d;border:1px solid #2dd4bf;border-radius:16px;font-family:system-ui,sans-serif;color:#e9f5f1;line-height:1.65;position:relative;z-index:99;';
-  d.innerHTML = '<h2 style="margin:0 0 10px;font-size:22px;">Oops — the content file has a typo 📝</h2>'
+  d.innerHTML = '<h2 style="margin:0 0 10px;font-size:22px;">Oops! The content file has a typo 📝</h2>'
     + '<p>The site itself is fine. The last edit to <b>content.js</b> probably has a missing quote, comma, or backtick.</p>'
-    + '<p style="margin-top:10px;">To fix: open <b>content.js</b> on GitHub and correct the last change — or click <b>History</b> and restore the previous version. Step-by-step help is in <b>EDITING.md</b>.</p>'
+    + '<p style="margin-top:10px;">To fix: open <b>content.js</b> on GitHub and correct the last change, or click <b>History</b> and restore the previous version. Step-by-step help is in <b>EDITING.md</b>.</p>'
     + '<p style="margin-top:12px;color:#8fa8a1;font-size:13px;">Technical detail: ' + (err && err.message ? String(err.message) : 'unknown error') + '</p>';
   document.body.appendChild(d);
 }

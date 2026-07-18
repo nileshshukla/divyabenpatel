@@ -2,8 +2,8 @@
 
 Your site: **https://nileshshukla.github.io/divyabenpatel/**
 
-Everything you can read on the site — your name, intro, and every timeline
-story — lives in **one file called `content.js`**. You never need to touch any
+Everything you can read on the site - your name, intro, and every timeline
+story - lives in **one file called `content.js`**. You never need to touch any
 other file.
 
 ---
@@ -14,7 +14,7 @@ other file.
 2. Click the file **`content.js`**.
 3. Click the **pencil icon** (✏️, top-right of the file) to edit.
 4. Change the text you want. Only edit words between `"quotes"` or between
-   `` `backticks` `` — don't delete the quotes, commas, or brackets themselves.
+   `` `backticks` `` - don't delete the quotes, commas, or brackets themselves.
 5. Click the green **"Commit changes…"** button, then **"Commit changes"** again.
 6. Wait about 1 minute, then refresh your site. Done! 🎉
 
@@ -27,7 +27,7 @@ other file.
 3. Drag your photos in. Give them simple names first, like `audit-award-1.jpg`
    (lowercase, dashes instead of spaces).
 4. Click the green **"Commit changes"** button.
-5. Now the photo exists — reference it in `content.js` like this:
+5. Now the photo exists - reference it in `content.js` like this:
    `{ src: "images/audit-award-1.jpg", alt: "What this photo shows" }`
 
 > **Certificates or documents:** add `, fit: "contain"` after the alt text so
@@ -39,10 +39,10 @@ other file.
 ## ➕ Add a new moment to the timeline
 
 1. Open `content.js` for editing (pencil icon).
-2. Scroll to the bottom — there's a block marked **"TO ADD A NEW MOMENT"**
+2. Scroll to the bottom - there's a block marked **"TO ADD A NEW MOMENT"**
    with a ready-made template between `COPY START` and `COPY END`.
 3. Copy the template and paste it **directly under the line
-   `const MOMENTS = [`** (near the top of the timeline list — newest goes first).
+   `const MOMENTS = [`** (near the top of the timeline list - newest goes first).
 4. Replace the placeholder text with your date, title, story, and photo names.
 5. Commit changes (green button). Refresh the site after a minute.
 
@@ -51,12 +51,12 @@ other file.
 
 ---
 
-## 😱 The site shows "Oops — the content file has a typo"
+## 😱 The site shows "Oops - the content file has a typo"
 
-Don't panic — nothing is lost, and visitors can't break anything. This just
+Don't panic - nothing is lost, and visitors can't break anything. This just
 means the last edit accidentally removed a quote, comma, or backtick.
 
-**Easiest fix — undo the last edit:**
+**Easiest fix - undo the last edit:**
 1. On GitHub, open `content.js` and click **"History"** (top right of the file).
 2. Click the edit **before** your last one.
 3. Click the **`< >`** ("Browse repository at this point") button, open
