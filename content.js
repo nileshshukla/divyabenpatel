@@ -143,13 +143,15 @@ Moments like these are a reminder of what makes the journey special: leadership 
     link: null
   },
   {
-    date: "Placeholder — year",
+    date: "2008 — 2009",
     category: "Education",
-    title: "Master of Science",
-    org: "Placeholder University",
-    story: "Placeholder — completing the M.S.: the focus of study and the foundation it built for a career in quality and compliance.",
+    title: "Master's in Pharmaceutical Manufacturing",
+    org: "Stevens Institute of Technology · Hoboken, NJ",
+    story: `Where the quality journey began: a Master's in Pharmaceutical Manufacturing from Stevens Institute of Technology.
+
+The program built the technical foundation for everything that followed — manufacturing processes, quality systems, and the science behind making medicines safely and consistently. It turned an interest in pharmaceutical science into a career-long commitment to quality.`,
     images: [
-      { src: "images/ph-2.svg", alt: "Placeholder — replace with a real photo" }
+      { src: "images/education-card.svg", alt: "Master's in Pharmaceutical Manufacturing — Stevens Institute of Technology, 2008–2009" }
     ],
     link: null
   }
