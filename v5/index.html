@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Divya Patel · Molecular Field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ==============================================================
+     V4 · "MOLECULAR FIELD"
+     A career record rendered as a living molecular network.
+     Deep indigo UV-chamber night; reagent cyan for the live field,
+     seal amber reserved for recognition (awards, certifications,
+     PASS results, verified credentials). Content: ../content.js.
+     ============================================================== */
+
+  :root {
+    --chamber: #070B1A;      /* UV-chamber night */
+    --panel: #0F1832;        /* indigo instrument panel */
+    --panel-edge: #22305A;   /* panel seam */
+    --reagent: #3EEFD0;      /* fluorescent cyan: the live field */
+    --reagent-dim: rgba(62, 239, 208, .45);
+    --seal: #FFB558;         /* amber: recognition and verification */
+    --ink: #EAF2FF;          /* blue-white text */
+    --mist: #93A1C4;         /* muted slate */
+    --bed: #E8EEF9;          /* light bed behind contain images */
+    --display: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+    --body: 'Instrument Sans', system-ui, sans-serif;
+    --mono: 'Spline Sans Mono', ui-monospace, monospace;
+    --maxw: 1140px;
+    --ease-spring: cubic-bezier(.22, 1.2, .36, 1);
+    --ease-out: cubic-bezier(.22, 1, .36, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body); background: var(--chamber); color: var(--ink);
+    line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  a { color: var(--reagent); }
+  button { font: inherit; color: inherit; }
+  img { display: block; }
+  :focus-visible { outline: 2px solid var(--reagent); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---------------- the molecular field ---------------- */
+  #field { position: fixed; inset: 0; z-index: 0; display: block; }
+  /* faint vignette so text always sits on quiet ground */
+  .veil { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(1200px 700px at 22% 12%, rgba(62,239,208,.06), transparent 60%),
+                radial-gradient(900px 600px at 85% 90%, rgba(255,181,88,.05), transparent 60%),
+                linear-gradient(rgba(7,11,26,.25), rgba(7,11,26,.55)); }
+  body > header, body > main, body > footer { position: relative; z-index: 2; }
+
+  /* ---------------- scroll progress ---------------- */
+  .progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60;
+    background: var(--reagent); transform-origin: 0 50%; transform: scaleX(0); }
+
+  /* ---------------- top bar ---------------- */
+  .bar { border-bottom: 1px solid rgba(34, 48, 90, .6); background: rgba(7, 11, 26, .55); }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  .mark { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--mist); text-decoration: none; }
+  .mark b { color: var(--reagent); font-weight: 600; }
+  .bar nav { display: flex; gap: 2px; }
+  .bar nav a { font-family: var(--mono); font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--mist); text-decoration: none; padding: 10px 12px; transition: color .2s; }
+  .bar nav a:hover { color: var(--reagent); }
+
+  /* ---------------- hero ---------------- */
+  .hero { padding: clamp(56px, 9vh, 110px) 0 30px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--reagent); margin-bottom: 18px; }
+  .eyebrow .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--reagent); margin-right: 10px; vertical-align: 1px;
+    box-shadow: 0 0 10px var(--reagent-dim); animation: pulse 2.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+  h1 { font-family: var(--display); font-weight: 800; font-optical-sizing: auto;
+    font-size: clamp(52px, 11.5vw, 142px); line-height: .92; letter-spacing: -.015em; }
+  h1 .ln { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+  h1.done .ln { overflow: visible; }
+  h1 .ch { display: inline-block; }
+  h1 .ln2 .ch { color: var(--reagent); }
+  h1.done .ln2 .ch { text-shadow: 0 0 26px rgba(62, 239, 208, .3); }
+  .assemble .ch { opacity: 0; transform: translateY(1.1em) rotate(9deg); }
+  .assemble.go .ch { animation: assemble .8s var(--ease-spring) forwards; }
+  @keyframes assemble { to { opacity: 1; transform: translateY(0) rotate(0); } }
+
+  .role { font-family: var(--mono); font-size: 13px; letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--mist); margin-top: 26px; max-width: 560px; }
+  .role b { color: var(--ink); font-weight: 500; }
+  .lede { color: var(--mist); font-size: 17px; max-width: 540px; margin-top: 14px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+  .badge { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--ink); background: rgba(15, 24, 50, .8);
+    border: 1px solid var(--panel-edge); border-radius: 999px; padding: 8px 15px 8px 12px; }
+  .badge::before { content: "◆ "; color: var(--seal); font-size: 9px; }
+  .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 34px;
+    font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--chamber); background: var(--reagent);
+    border: none; border-radius: 999px; padding: 15px 26px; cursor: pointer; text-decoration: none;
+    transition: box-shadow .25s; will-change: transform; }
+  .cta:hover { box-shadow: 0 0 34px rgba(62, 239, 208, .45); }
+  .cta .arr { transition: transform .25s var(--ease-out); }
+  .cta:hover .arr { transform: translateY(3px); }
+
+  /* hexagon specimen photo: the benzene ring */
+  .specimen { position: relative; width: clamp(200px, 24vw, 300px); aspect-ratio: 1; }
+  .specimen .hex, .specimen::before { position: absolute; inset: 0;
+    clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%); }
+  .specimen::before { content: ""; inset: -7px;
+    background: conic-gradient(from 180deg, var(--reagent), #1a5f7a, var(--seal), #1a5f7a, var(--reagent));
+    animation: ringspin 14s linear infinite; }
+  @keyframes ringspin { to { transform: rotate(360deg); } }
+  .specimen .hex { overflow: hidden; background: var(--panel); }
+  .specimen img { width: 100%; height: 100%; object-fit: cover; }
+  .specimen .initials { display: flex; align-items: center; justify-content: center; height: 100%;
+    font-family: var(--display); font-size: 64px; font-weight: 800; color: var(--reagent); }
+  .specimen figcaption { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%);
+    white-space: nowrap; font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--mist); }
+
+  /* ---------------- certificate of analysis (counters) ---------------- */
+  .coa { margin: 72px 0 0; border: 1px solid var(--panel-edge); border-radius: 14px;
+    background: rgba(15, 24, 50, .78); overflow: hidden; }
+  .coa-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap;
+    gap: 6px 18px; padding: 20px 26px 14px; border-bottom: 1px dashed var(--panel-edge); }
+  .coa-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(19px, 2.6vw, 25px);
+    letter-spacing: -.01em; }
+  .coa-head .lot { font-family: var(--mono); font-size: 10.5px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--mist); }
+  .coa-rows { padding: 10px 26px 20px; }
+  .coa-row { display: flex; align-items: baseline; gap: 14px; padding: 12px 0;
+    border-bottom: 1px dashed rgba(34, 48, 90, .5); }
+  .coa-row:last-child { border-bottom: none; }
+  .coa-row .param { font-size: 14.5px; color: var(--ink); flex-shrink: 0; }
+  .coa-row .leader { flex: 1; border-bottom: 2px dotted rgba(147, 161, 196, .35);
+    transform: translateY(-4px); min-width: 24px; }
+  .coa-row .result { font-family: var(--mono); font-size: clamp(24px, 3.4vw, 34px); font-weight: 600;
+    color: var(--reagent); min-width: 2ch; text-align: right; line-height: 1; }
+  .coa-row .status { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--seal); border: 1.5px solid var(--seal); border-radius: 4px;
+    padding: 4px 8px; transform: rotate(-4deg) scale(2.4); opacity: 0; }
+  .coa-row .status.stamped { animation: stamp .45s var(--ease-spring) forwards; }
+  @keyframes stamp { to { transform: rotate(-4deg) scale(1); opacity: 1; } }
+
+  /* ---------------- record: filter + timeline ---------------- */
+  .record { padding: 86px 0 40px; }
+  .record-head { margin-bottom: 34px; }
+  .record-head .eyebrow { margin-bottom: 12px; }
+  .record-head h2 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.4vw, 62px);
+    line-height: .96; letter-spacing: -.015em; }
+
+  .chips { position: relative; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .chip { position: relative; z-index: 1; font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+    letter-spacing: 1.5px; text-transform: uppercase; color: var(--mist); background: transparent;
+    border: 1px solid var(--panel-edge); border-radius: 999px; padding: 10px 18px; cursor: pointer;
+    transition: color .3s, border-color .3s; }
+  .chip:hover { color: var(--ink); border-color: var(--reagent-dim); }
+  .chip[aria-pressed="true"] { color: var(--chamber); border-color: transparent; }
+  .chip .n { opacity: .65; margin-left: 5px; }
+  .chip-pill { position: absolute; z-index: 0; border-radius: 999px; background: var(--reagent);
+    box-shadow: 0 0 22px rgba(62, 239, 208, .35);
+    transition: left .45s var(--ease-spring), top .45s var(--ease-spring),
+                width .45s var(--ease-spring), height .45s var(--ease-spring); }
+  .showing { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--mist); margin-top: 16px; }
+
+  /* the bond chain */
+  .chain { position: relative; margin-top: 44px; padding-left: 42px; }
+  .chain::before { content: ""; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px;
+    background: linear-gradient(var(--reagent-dim), rgba(34, 48, 90, .8) 12%, rgba(34, 48, 90, .8) 88%, transparent); }
+
+  .moment { position: relative; margin-bottom: 40px; }
+  .moment.off { display: none; }
+  .moment .node { position: absolute; left: -42px; top: 30px; width: 22px; height: 22px; }
+  .moment .node::before { content: ""; position: absolute; inset: 5px; border-radius: 50%;
+    background: var(--panel-edge); transition: background .4s, box-shadow .4s; }
+  .moment.in .node::before { background: var(--reagent); box-shadow: 0 0 14px var(--reagent-dim); }
+  .moment.in .node.seal::before { background: var(--seal); box-shadow: 0 0 14px rgba(255, 181, 88, .5); }
+  .moment.in .node::after { content: ""; position: absolute; inset: 0; border-radius: 50%;
+    border: 1px solid var(--reagent-dim); animation: ripple 2.8s ease-out infinite; }
+  .moment.in .node.seal::after { border-color: rgba(255, 181, 88, .5); }
+  @keyframes ripple { 0% { transform: scale(.4); opacity: 1; } 70%, 100% { transform: scale(1.5); opacity: 0; } }
+
+  /* specimen cards */
+  .card { border: 1px solid var(--panel-edge); border-radius: 16px; background: rgba(15, 24, 50, .82);
+    padding: clamp(22px, 3.4vw, 38px); transform-style: preserve-3d; will-change: transform;
+    transition: border-color .35s, box-shadow .35s; position: relative; overflow: hidden; }
+  .tilt-on .card { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+  .card:hover { border-color: rgba(62, 239, 208, .4); box-shadow: 0 22px 60px rgba(0, 0, 0, .45), 0 0 40px rgba(62, 239, 208, .07); }
+  .card .glare { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+    background: radial-gradient(420px 320px at var(--gx, 50%) var(--gy, 50%), rgba(62, 239, 208, .08), transparent 65%);
+    transition: opacity .35s; }
+  .card:hover .glare { opacity: 1; }
+
+  .reveal { opacity: 0; transform: translateY(30px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .75s var(--ease-out), transform .75s var(--ease-out); }
+
+  .card-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--mist); margin-bottom: 14px; }
+  .card-eyebrow .date { color: var(--ink); font-weight: 500; }
+  .cat-tag { border: 1px solid var(--reagent-dim); color: var(--reagent); border-radius: 4px;
+    padding: 3px 9px; font-weight: 500; }
+  .cat-tag.seal { border-color: rgba(255, 181, 88, .55); color: var(--seal); }
+  .card h3 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3.6vw, 40px);
+    line-height: 1.02; letter-spacing: -.012em; margin-bottom: 8px; }
+  .card .org { font-family: var(--mono); font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--mist); margin-bottom: 18px; }
+
+  .card-grid { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); gap: 30px; align-items: start; }
+  .story { color: rgba(234, 242, 255, .86); font-size: 15.5px; overflow: hidden;
+    transition: max-height .55s var(--ease-out); }
+  .story p + p { margin-top: 12px; }
+  .story.masked { -webkit-mask-image: linear-gradient(#000 55%, transparent 96%);
+    mask-image: linear-gradient(#000 55%, transparent 96%); }
+  .readmore { margin-top: 12px; background: none; border: none; cursor: pointer; padding: 8px 0;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--reagent); }
+  .readmore:hover { text-decoration: underline; }
+  .cred { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 9px 0;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--seal); text-decoration: none;
+    border-bottom: 1px solid rgba(255, 181, 88, .45); }
+  .cred:hover { border-bottom-color: var(--seal); }
+
+  /* gallery */
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .shot { position: relative; border: none; background: var(--panel); border-radius: 10px;
+    overflow: hidden; cursor: zoom-in; padding: 0; aspect-ratio: 4/3; }
+  .shot:first-child { grid-column: span 2; aspect-ratio: 16/10; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+  .shot:hover img { transform: scale(1.045); }
+  .shot.contain { background: var(--bed); }
+  .shot.contain img { object-fit: contain; padding: 8px; }
+  .shot.contain:hover img { transform: scale(1.015); }
+  .shot .plus { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(7, 11, 26, .6); font-family: var(--mono); font-size: 19px; font-weight: 600; color: var(--ink); }
+  .shot .vtag { position: absolute; top: 10px; left: 10px; font-family: var(--mono); font-size: 9.5px;
+    font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #7A4A12;
+    background: var(--seal); border-radius: 3px; padding: 3px 7px; }
+
+  .empty { font-family: var(--mono); font-size: 13px; letter-spacing: 1px; color: var(--mist);
+    border: 1px dashed var(--panel-edge); border-radius: 12px; padding: 34px; text-align: center; }
+
+  /* ---------------- footer ---------------- */
+  footer { border-top: 1px solid rgba(34, 48, 90, .6); margin-top: 50px; padding: 60px 0 70px;
+    background: rgba(7, 11, 26, .55); }
+  .sig { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 6vw, 66px);
+    line-height: .95; letter-spacing: -.015em; }
+  .sig span { color: var(--reagent); }
+  .foot-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 26px; }
+  .linkedin { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono);
+    font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--chamber); background: var(--reagent); border-radius: 999px; padding: 14px 24px;
+    text-decoration: none; will-change: transform; transition: box-shadow .25s; }
+  .linkedin:hover { box-shadow: 0 0 30px rgba(62, 239, 208, .45); }
+  .foot-row .alt { font-family: var(--mono); font-size: 11.5px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 8px 0; }
+  .foot-row .alt:hover { color: var(--reagent); }
+  .foot-note { font-family: var(--mono); font-size: 12px; color: var(--mist); margin-top: 22px; }
+
+  /* ---------------- lightbox ---------------- */
+  .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(4, 6, 15, .95);
+    display: none; align-items: center; justify-content: center; flex-direction: column; padding: 26px; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: min(90vw, 1040px); max-height: 72vh; border-radius: 8px; background: var(--bed); }
+  .lb-caption { font-family: var(--mono); font-size: 12px; letter-spacing: 1.2px; color: var(--ink);
+    margin-top: 18px; text-align: center; max-width: 660px; text-transform: uppercase; }
+  .lb-count { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--reagent); margin-top: 8px; }
+  .lb-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px;
+    border: 1px solid var(--panel-edge); border-radius: 50%; background: var(--panel); color: var(--ink);
+    font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lb-btn:hover { border-color: var(--reagent); color: var(--reagent); }
+  .lb-prev { left: 20px; } .lb-next { right: 20px; }
+  .lb-close { position: absolute; top: 14px; right: 20px; background: none; border: none;
+    font-size: 34px; color: var(--ink); cursor: pointer; line-height: 1; }
+  .lb-close:hover { color: var(--reagent); }
+
+  /* ---------------- responsive ---------------- */
+  @media (max-width: 880px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 26px; }
+    .specimen { order: -1; margin-bottom: 26px; }
+    .specimen figcaption { left: 0; transform: none; }
+    .card-grid { grid-template-columns: 1fr; gap: 22px; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 18px; }
+    .mark .mark-x { display: none; }
+    .chain { padding-left: 30px; }
+    .chain::before { left: 6px; }
+    .moment .node { left: -30px; width: 14px; height: 14px; top: 26px; }
+    .moment .node::before { inset: 3px; }
+    .coa-head, .coa-rows { padding-left: 18px; padding-right: 18px; }
+    .coa-row { flex-wrap: wrap; gap: 8px; }
+    .coa-row .leader { min-width: 12px; }
+    .gallery { grid-template-columns: 1fr; }
+    .shot, .shot:first-child { grid-column: span 1; aspect-ratio: 4/3; }
+    .lb-btn { width: 42px; height: 42px; }
+    .lb-prev { left: 8px; } .lb-next { right: 8px; }
+    .lightbox { padding: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .01s !important; animation-iteration-count: 1 !important;
+      transition-duration: .01s !important; }
+    .assemble .ch { opacity: 1; transform: none; }
+    .reveal { opacity: 1; transform: none; }
+    .coa-row .status { opacity: 1; transform: rotate(-4deg) scale(1); }
+    .specimen::before { animation: none; }
+    .moment.in .node::after { animation: none; opacity: 0; }
+    .progress { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="veil" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top"><b>DP</b><span class="mark-x"> · Molecular field · Quality record</span></a>
+    <nav>
+      <a href="#record">The record</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow" id="heroEyebrow"><span class="dot"></span>Career record</p>
+          <h1 id="heroName" class="assemble"></h1>
+          <p class="role" id="pRole"></p>
+          <p class="lede" id="pLede"></p>
+          <div class="badges" id="pBadges"></div>
+          <a class="cta magnetic" href="#record">Explore the record <span class="arr">↓</span></a>
+        </div>
+        <figure class="specimen">
+          <div class="hex" id="specimenImg"></div>
+          <figcaption id="specimenCap"></figcaption>
+        </figure>
+      </div>
+
+      <!-- certificate of analysis: the career, tested and passed -->
+      <section class="coa reveal" id="coa" aria-label="Career summary">
+        <div class="coa-head">
+          <h2>Certificate of analysis</h2>
+          <span class="lot" id="coaLot"></span>
+        </div>
+        <div class="coa-rows" id="coaRows"></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="record" id="record">
+    <div class="wrap">
+      <div class="record-head">
+        <p class="eyebrow"><span class="dot"></span>Filter the record</p>
+        <h2>Every bond in the chain</h2>
+        <div class="chips" id="chips"><span class="chip-pill" id="chipPill" aria-hidden="true"></span></div>
+        <p class="showing" id="showing" aria-live="polite"></p>
+      </div>
+      <div class="chain" id="chain"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <p class="sig" id="sigName"></p>
+    <div class="foot-row">
+      <a class="linkedin magnetic" href="https://www.linkedin.com/in/divya-patel-ms-asq-cqa-ssgb-57b9aa27/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
+      <a class="alt" href="../index.html">Classic site</a>
+      <a class="alt" href="../v3/index.html">Retention time</a>
+    </div>
+    <p class="foot-note">© 2026 Divya Patel · Molecular field, fourth edition</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close photo viewer">×</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">‹</button>
+  <img id="lbImg" alt="" />
+  <div class="lb-caption" id="lbCaption"></div>
+  <div class="lb-count" id="lbCount"></div>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">›</button>
+</div>
+
+<script src="../content.js"></script>
+<script>
+function showContentError(err) {
+  console.error(err);
+  const d = document.createElement('div');
+  d.style.cssText = 'max-width:620px;margin:80px auto;padding:26px 28px;background:#0F1832;border:1px solid #3EEFD0;border-radius:12px;font-family:system-ui,sans-serif;color:#EAF2FF;line-height:1.6;position:relative;z-index:5;';
+  d.innerHTML = '<h2 style="margin:0 0 8px;font-size:20px;">The content file has a typo</h2>'
+    + '<p>The site itself is fine. The last edit to <b>content.js</b> probably has a missing quote, comma, or backtick.</p>'
+    + '<p style="margin-top:8px;">Open <b>content.js</b> on GitHub and correct the last change, or use History to restore the previous version. See <b>EDITING.md</b>.</p>'
+    + '<p style="margin-top:10px;color:#93A1C4;font-size:13px;">Detail: ' + (err && err.message ? String(err.message) : 'unknown') + '</p>';
+  document.body.appendChild(d);
+}
+try {
+if (typeof PROFILE === 'undefined' || typeof CATEGORIES === 'undefined' || typeof MOMENTS === 'undefined')
+  throw new Error('content.js did not load or has a syntax error near the last edit');
+
+const IMG = src => '../' + src;
+const esc = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE_POINTER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+/* ================================================================
+   THE MOLECULAR FIELD · canvas particle network
+   Nodes are atoms, near neighbours bond; very near pairs render a
+   double bond. Amber nodes are the rare "verified" atoms. The
+   cursor is a reactive site: nearby atoms link to it and drift off.
+   ================================================================ */
+(function molecularField() {
+  const canvas = document.getElementById('field');
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1, atoms = [], raf = null;
+  const mouse = { x: -9999, y: -9999, on: false };
+  const LINK = 130, MOUSE_LINK = 170, DOUBLE = 54;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+  }
+  function seed() {
+    const n = Math.max(26, Math.min(85, Math.floor(W * H / 16000)));
+    atoms = Array.from({ length: n }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .34, vy: (Math.random() - .5) * .34,
+      r: 1.3 + Math.random() * 1.5,
+      seal: Math.random() < .13
+    }));
+  }
+  function step() {
+    ctx.clearRect(0, 0, W, H);
+    for (const a of atoms) {
+      a.x += a.vx; a.y += a.vy;
+      if (a.x < -20) a.x = W + 20; if (a.x > W + 20) a.x = -20;
+      if (a.y < -20) a.y = H + 20; if (a.y > H + 20) a.y = -20;
+      if (mouse.on) {
+        const dx = a.x - mouse.x, dy = a.y - mouse.y, d = Math.hypot(dx, dy);
+        if (d < 90 && d > 1) { a.x += dx / d * .55; a.y += dy / d * .55; }
+      }
+    }
+    for (let i = 0; i < atoms.length; i++) {
+      const a = atoms[i];
+      for (let j = i + 1; j < atoms.length; j++) {
+        const b = atoms[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        if (Math.abs(dx) > LINK || Math.abs(dy) > LINK) continue;
+        const d = Math.hypot(dx, dy);
+        if (d > LINK) continue;
+        const alpha = (1 - d / LINK) * .34;
+        ctx.strokeStyle = 'rgba(62,239,208,' + alpha.toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        if (d < DOUBLE && d > 1) {
+          const ox = -dy / d * 2.2, oy = dx / d * 2.2;
+          ctx.beginPath();
+          ctx.moveTo(a.x + ox, a.y + oy); ctx.lineTo(b.x + ox, b.y + oy);
+          ctx.moveTo(a.x - ox, a.y - oy); ctx.lineTo(b.x - ox, b.y - oy);
+          ctx.stroke();
+        } else {
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      if (mouse.on) {
+        const d = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+        if (d < MOUSE_LINK) {
+          ctx.strokeStyle = 'rgba(62,239,208,' + ((1 - d / MOUSE_LINK) * .5).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        }
+      }
+      ctx.fillStyle = a.seal ? 'rgba(255,181,88,.85)' : 'rgba(62,239,208,.8)';
+      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.2832); ctx.fill();
+    }
+    raf = requestAnimationFrame(step);
+  }
+  window.addEventListener('resize', () => { resize(); if (REDUCED) staticFrame(); }, { passive: true });
+  resize();
+  function staticFrame() {
+    // one still render for reduced motion: the field, at rest
+    ctx.clearRect(0, 0, W, H);
+    const hold = mouse.on; mouse.on = false;
+    const r = raf; raf = 'stop';
+    (function once() {
+      for (let i = 0; i < atoms.length; i++) {
+        const a = atoms[i];
+        for (let j = i + 1; j < atoms.length; j++) {
+          const b = atoms[j];
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d > LINK) continue;
+          ctx.strokeStyle = 'rgba(62,239,208,' + ((1 - d / LINK) * .3).toFixed(3) + ')';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+        ctx.fillStyle = a.seal ? 'rgba(255,181,88,.85)' : 'rgba(62,239,208,.8)';
+        ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.2832); ctx.fill();
+      }
+    })();
+    mouse.on = hold; raf = r;
+  }
+  if (REDUCED) { staticFrame(); return; }
+  if (FINE_POINTER) {
+    window.addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.on = true; }, { passive: true });
+    window.addEventListener('pointerleave', () => { mouse.on = false; }, { passive: true });
+    document.addEventListener('mouseleave', () => { mouse.on = false; });
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+    else if (!raf) step();
+  });
+  step();
+})();
+
+/* ================================================================
+   HERO · kinetic name assembly + profile
+   ================================================================ */
+const nameEl = document.getElementById('heroName');
+nameEl.setAttribute('aria-label', PROFILE.name);
+const nameParts = PROFILE.name.split(' ');
+const line1 = nameParts[0], line2 = nameParts.slice(1).join(' ') || '';
+function letterSpans(word, base) {
+  return word.split('').map((c, i) =>
+    c === ' ' ? '<span class="ch">&nbsp;</span>'
+    : `<span class="ch" style="animation-delay:${(base + i) * 45}ms">${esc(c)}</span>`).join('');
+}
+nameEl.innerHTML = `<span class="ln ln1" aria-hidden="true">${letterSpans(line1, 0)}</span>`
+  + (line2 ? `<span class="ln ln2" aria-hidden="true">${letterSpans(line2, line1.length + 2)}</span>` : '');
+requestAnimationFrame(() => requestAnimationFrame(() => nameEl.classList.add('go')));
+const assembleMs = (line1.length + 2 + line2.length) * 45 + 850;
+setTimeout(() => nameEl.classList.add('done'), REDUCED ? 0 : assembleMs);
+
+const roleParts = (PROFILE.role || '').split('·');
+document.getElementById('pRole').innerHTML = `<b>${esc(roleParts[0].trim())}</b>${roleParts[1] ? ' · ' + esc(roleParts.slice(1).join('·').trim()) : ''}`;
+document.getElementById('pLede').textContent = PROFILE.lede || '';
+document.getElementById('pBadges').innerHTML = (PROFILE.badges || []).map(b => `<span class="badge">${esc(b)}</span>`).join('');
+document.getElementById('specimenImg').innerHTML = PROFILE.photo
+  ? `<img src="${esc(IMG(PROFILE.photo))}" alt="${esc(PROFILE.name)}" />`
+  : `<div class="initials">${esc(PROFILE.name.split(' ').map(w => w[0] || '').join(''))}</div>`;
+document.getElementById('specimenCap').textContent = 'Specimen · ' + PROFILE.name;
+document.getElementById('sigName').innerHTML = `${esc(line1)} <span>${esc(line2)}</span>`;
+
+/* year range, derived from the data */
+const YEARS = MOMENTS.flatMap(m => (String(m.date || '').match(/\d{4}/g) || []).map(Number));
+const Y0 = YEARS.length ? Math.min(...YEARS) : new Date().getFullYear();
+const Y1 = Math.max(new Date().getFullYear(), YEARS.length ? Math.max(...YEARS) : 0);
+document.getElementById('heroEyebrow').innerHTML = `<span class="dot"></span>Career record · ${Y0} – ${Y1}`;
+
+/* ================================================================
+   CERTIFICATE OF ANALYSIS · counters that count up, then PASS
+   ================================================================ */
+const count = c => MOMENTS.filter(m => m.category === c).length;
+const COA = [
+  { param: 'Years in pharmaceutical quality', value: Y1 - Y0 },
+  { param: 'Moments on record', value: MOMENTS.length },
+  { param: 'Certifications held', value: count('Certification') },
+  { param: 'Awards received', value: count('Award') }
+].filter(r => r.value > 0);
+document.getElementById('coaLot').textContent = `Specimen DP-${Y0} · All parameters within specification`;
+document.getElementById('coaRows').innerHTML = COA.map((r, i) => `
+  <div class="coa-row">
+    <span class="param">${esc(r.param)}</span>
+    <span class="leader" aria-hidden="true"></span>
+    <span class="result" data-target="${r.value}">0</span>
+    <span class="status">Pass</span>
+  </div>`).join('');
+
+function runCounters() {
+  const rows = document.querySelectorAll('.coa-row');
+  rows.forEach((row, i) => {
+    const el = row.querySelector('.result');
+    const target = +el.dataset.target;
+    const stamp = row.querySelector('.status');
+    if (REDUCED) { el.textContent = target; return; }
+    const t0 = performance.now(), dur = 1100 + i * 150;
+    (function tick(t) {
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+      else setTimeout(() => stamp.classList.add('stamped'), 120);
+    })(t0);
+  });
+}
+let coaDone = false;
+new IntersectionObserver((es, io) => es.forEach(e => {
+  if (e.isIntersecting && !coaDone) { coaDone = true; runCounters(); io.disconnect(); }
+}), { threshold: .35 }).observe(document.getElementById('coa'));
+
+/* ================================================================
+   FILTER CHIPS · liquid active pill
+   ================================================================ */
+const chipsBox = document.getElementById('chips');
+const pill = document.getElementById('chipPill');
+let activeCat = 'All';
+chipsBox.insertAdjacentHTML('beforeend', CATEGORIES.map(c => {
+  const n = c === 'All' ? MOMENTS.length : count(c);
+  return `<button class="chip" data-cat="${esc(c)}" aria-pressed="${c === 'All'}">${esc(c)}<span class="n">${n}</span></button>`;
+}).join(''));
+function movePill() {
+  const active = chipsBox.querySelector('.chip[aria-pressed="true"]');
+  if (!active) { pill.style.width = '0px'; return; }
+  pill.style.left = active.offsetLeft + 'px';
+  pill.style.top = active.offsetTop + 'px';
+  pill.style.width = active.offsetWidth + 'px';
+  pill.style.height = active.offsetHeight + 'px';
+}
+chipsBox.addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip || chip.dataset.cat === activeCat) return;
+  activeCat = chip.dataset.cat;
+  chipsBox.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === chip));
+  movePill();
+  applyFilter();
+});
+window.addEventListener('resize', movePill, { passive: true });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
+
+/* ================================================================
+   THE CHAIN · one specimen card per moment
+   ================================================================ */
+const SEAL_CATS = new Set(['Award', 'Certification']);
+const CLAMP_AT = 420, CLAMP_H = 176;
+function storyHTML(story) {
+  return String(story || '').split(/\n\s*\n/).map(p => `<p>${esc(p.trim())}</p>`).join('');
+}
+function galleryHTML(m, mi) {
+  const imgs = m.images || [];
+  if (!imgs.length) return '';
+  const shown = imgs.slice(0, 3);
+  const extra = imgs.length - shown.length;
+  return `<div class="gallery" data-mi="${mi}">` + shown.map((im, i) => `
+    <button class="shot${im.fit === 'contain' ? ' contain' : ''}" data-i="${i}" aria-label="Open photo: ${esc(im.alt)}">
+      <img src="${esc(IMG(im.src))}" alt="${esc(im.alt)}" loading="lazy" />
+      ${im.fit === 'contain' ? '<span class="vtag">Shown whole</span>' : ''}
+      ${extra > 0 && i === shown.length - 1 ? `<span class="plus">+${extra} more</span>` : ''}
+    </button>`).join('') + `</div>`;
+}
+document.getElementById('chain').innerHTML = MOMENTS.map((m, mi) => {
+  const seal = SEAL_CATS.has(m.category);
+  const long = String(m.story || '').length > CLAMP_AT;
+  return `
+  <article class="moment reveal" data-mi="${mi}" data-cat="${esc(m.category || '')}">
+    <span class="node${seal ? ' seal' : ''}" aria-hidden="true"></span>
+    <div class="card">
+      <span class="glare" aria-hidden="true"></span>
+      <div class="card-eyebrow">
+        <span class="date">${esc(m.date || '')}</span>
+        <span class="cat-tag${seal ? ' seal' : ''}">${esc(m.category || 'Entry')}</span>
+      </div>
+      <h3>${esc(m.title || 'Untitled moment')}</h3>
+      <p class="org">${esc(m.org || '')}</p>
+      <div class="card-grid">
+        <div>
+          <div class="story${long ? ' masked' : ''}"${long ? ` style="max-height:${CLAMP_H}px"` : ''}>${storyHTML(m.story)}</div>
+          ${long ? '<button class="readmore">Read the full story ↓</button>' : ''}
+          ${m.link ? `<br><a class="cred" href="${esc(m.link.url)}" target="_blank" rel="noopener">${esc(m.link.label)} ↗</a>` : ''}
+        </div>
+        ${galleryHTML(m, mi)}
+      </div>
+    </div>
+  </article>`;
+}).join('');
+
+/* read more */
+document.querySelectorAll('.readmore').forEach(btn => btn.addEventListener('click', () => {
+  const story = btn.parentElement.querySelector('.story');
+  const open = story.classList.contains('masked');
+  if (open) {
+    story.classList.remove('masked');
+    story.style.maxHeight = story.scrollHeight + 'px';
+    btn.textContent = 'Show less ↑';
+  } else {
+    story.style.maxHeight = CLAMP_H + 'px';
+    story.classList.add('masked');
+    btn.textContent = 'Read the full story ↓';
+    btn.closest('.moment').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest' });
+  }
+}));
+
+/* ================================================================
+   FILTERING + SCROLL REVEALS
+   ================================================================ */
+const showing = document.getElementById('showing');
+const revealIO = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); }
+}), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+function observeReveals() {
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => revealIO.observe(el));
+}
+function applyFilter() {
+  let n = 0;
+  document.querySelectorAll('.moment').forEach(el => {
+    const on = activeCat === 'All' || el.dataset.cat === activeCat;
+    el.classList.toggle('off', !on);
+    if (on) {
+      n++;
+      if (!REDUCED) { // re-run the entrance so filtered results arrive, not blink
+        el.classList.remove('in');
+        revealIO.unobserve(el);
+      }
+    }
+  });
+  const old = document.querySelector('.chain .empty');
+  if (old) old.remove();
+  if (!n) document.getElementById('chain').insertAdjacentHTML('beforeend',
+    `<p class="empty">No moments in this category yet. Choose another filter.</p>`);
+  showing.textContent = `Showing ${n} of ${MOMENTS.length} moments` + (activeCat === 'All' ? '' : ` · ${activeCat}`);
+  requestAnimationFrame(observeReveals);
+}
+applyFilter();
+movePill();
+observeReveals();
+
+/* ================================================================
+   MICRO-INTERACTIONS · 3D card tilt, magnetic buttons, progress
+   ================================================================ */
+if (FINE_POINTER && !REDUCED) {
+  document.body.classList.add('tilt-on');
+  document.querySelectorAll('.card').forEach(card => {
+    let raf = null;
+    card.addEventListener('pointermove', e => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--ry', ((px - .5) * 4).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', ((.5 - py) * 4).toFixed(2) + 'deg');
+        card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+      });
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg');
+    });
+  });
+
+  document.querySelectorAll('.magnetic').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px, ${(e.clientY - r.top - r.height / 2) * .3}px)`;
+    });
+    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+  });
+}
+
+const progress = document.getElementById('progress');
+let progTick = false;
+window.addEventListener('scroll', () => {
+  if (progTick) return;
+  progTick = true;
+  requestAnimationFrame(() => {
+    progTick = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  });
+}, { passive: true });
+
+/* ================================================================
+   LIGHTBOX
+   ================================================================ */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+let lbImgs = [], lbIdx = 0, lbReturn = null;
+function showLb() {
+  const im = lbImgs[lbIdx];
+  lbImg.src = IMG(im.src);
+  lbImg.alt = im.alt || '';
+  lbImg.style.objectFit = im.fit === 'contain' ? 'contain' : '';
+  document.getElementById('lbCaption').textContent = im.alt || '';
+  document.getElementById('lbCount').textContent = `${lbIdx + 1} / ${lbImgs.length}`;
+}
+function openLb(mi, i) {
+  lbImgs = MOMENTS[mi].images || [];
+  lbIdx = i; lbReturn = document.activeElement;
+  showLb();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lbClose').focus();
+}
+function closeLb() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+  if (lbReturn) lbReturn.focus();
+}
+function stepLb(d) { lbIdx = (lbIdx + d + lbImgs.length) % lbImgs.length; showLb(); }
+document.querySelectorAll('.gallery').forEach(g => g.addEventListener('click', e => {
+  const shot = e.target.closest('.shot');
+  if (shot) openLb(+g.dataset.mi, +shot.dataset.i);
+}));
+document.getElementById('lbClose').addEventListener('click', closeLb);
+document.getElementById('lbPrev').addEventListener('click', () => stepLb(-1));
+document.getElementById('lbNext').addEventListener('click', () => stepLb(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') stepLb(-1);
+  if (e.key === 'ArrowRight') stepLb(1);
+});
+
+} catch (err) { showContentError(err); }
+</script>
+</body>
+</html>
